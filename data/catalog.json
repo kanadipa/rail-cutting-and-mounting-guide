@@ -1,0 +1,196 @@
+[
+  {
+    "manufacturer": "Weidmueller",
+    "articleNumber": "0236500000",
+    "displayName": "TS 35X15/LL 2M/ST/ZN",
+    "category": "rail",
+    "profileWxH": "35X15",
+    "barLengthMm": 2000,
+    "glb": "assets/glb/Weidmueller.0236500000.glb",
+    "image": "assets/images/Weidmueller.0236500000.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7512-1DK01-0AB0",
+    "displayName": "CPU 1512SP-1 PN, 200KB Prog./1MB Data",
+    "category": "cpu",
+    "glb": "assets/glb/Siemens.6ES7512-1DK01-0AB0.glb",
+    "image": "assets/images/Siemens.6ES7512-1DK01-0AB0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7193-6AR00-0AA0",
+    "displayName": "ET 200SP, Busadapter BA 2xRJ45",
+    "category": "i_o_interface_module",
+    "glb": "assets/glb/Siemens.6ES7193-6AR00-0AA0.glb",
+    "image": "assets/images/Siemens.6ES7193-6AR00-0AA0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7193-6BP00-0BD0",
+    "displayName": "BaseUnit Type D0, BU20-P12+A0+0B",
+    "category": "i_o_base_unit",
+    "glb": "assets/glb/Siemens.6ES7193-6BP00-0BD0.glb",
+    "image": "assets/images/Siemens.6ES7193-6BP00-0BD0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7134-6PA20-0BD0",
+    "displayName": "ET 200SP AI Energy Meter 480VAC ST",
+    "category": "i_o_interface_module",
+    "glb": "assets/glb/Siemens.6ES7134-6PA20-0BD0.glb",
+    "image": "assets/images/Siemens.6ES7134-6PA20-0BD0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7193-6PA00-0AA0",
+    "displayName": "ET200SP, Servermodule",
+    "category": "i_o_base_unit",
+    "glb": "assets/glb/Siemens.6ES7193-6PA00-0AA0.glb",
+    "image": "assets/images/Siemens.6ES7193-6PA00-0AA0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7193-6BP00-0BA0",
+    "displayName": "BaseUnit Type A0, BU15-P16+A0+2B",
+    "category": "i_o_base_unit",
+    "glb": "assets/glb/Siemens.6ES7193-6BP00-0BA0.glb",
+    "image": "assets/images/Siemens.6ES7193-6BP00-0BA0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7131-6BH01-0BA0",
+    "displayName": "ET 200SP, DI 16x 24V DC ST, PU 1",
+    "category": "i_o_interface_module",
+    "glb": "assets/glb/Siemens.6ES7131-6BH01-0BA0.glb",
+    "image": "assets/images/Siemens.6ES7131-6BH01-0BA0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7132-6BH01-0BA0",
+    "displayName": "ET 200SP, DQ 16x 24V DC/0,5A ST, PU 1",
+    "category": "i_o_interface_module",
+    "glb": "assets/glb/Siemens.6ES7132-6BH01-0BA0.glb",
+    "image": "assets/images/Siemens.6ES7132-6BH01-0BA0.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7134-6HD01-0BA1",
+    "displayName": "ET 200SP, AI 4xU/I 2-Wire ST, PU 1",
+    "category": "i_o_interface_module",
+    "glb": "assets/glb/Siemens.6ES7134-6HD01-0BA1.glb",
+    "image": "assets/images/Siemens.6ES7134-6HD01-0BA1.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7135-6HD00-0BA1",
+    "displayName": "ET 200SP, AQ 4xU/I ST",
+    "category": "modules",
+    "glb": "assets/glb/Siemens.6ES7135-6HD00-0BA1.glb",
+    "image": "assets/images/Siemens.6ES7135-6HD00-0BA1.webp"
+  },
+  {
+    "manufacturer": "Siemens",
+    "articleNumber": "6ES7134-6JD00-0CA1",
+    "displayName": "ET 200SP, AI 4xRTD/TC 2-/3-/4-Wire HF",
+    "category": "i_o_interface_module",
+    "glb": "assets/glb/Siemens.6ES7134-6JD00-0CA1.glb",
+    "image": "assets/images/Siemens.6ES7134-6JD00-0CA1.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "249-117",
+    "displayName": "End bracket for terminal block",
+    "category": "end_bracket",
+    "glb": "assets/glb/Wago.249-117.glb",
+    "image": "assets/images/Wago.249-117.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2009-305",
+    "displayName": "Busbar support",
+    "category": "end_bracket",
+    "glb": "assets/glb/Wago.2009-305.glb",
+    "image": "assets/images/Wago.2009-305.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2205-7641",
+    "displayName": "Multi level installation terminal block",
+    "category": "terminal",
+    "glb": "assets/glb/Wago.2205-7641.glb",
+    "image": "assets/images/Wago.2205-7641.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2203-7641",
+    "displayName": "Multi level installation terminal block",
+    "category": "terminal",
+    "glb": "assets/glb/Wago.2203-7641.glb",
+    "image": "assets/images/Wago.2203-7641.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2003-7692",
+    "displayName": "End and partition plate for terminal block",
+    "category": "end_cover",
+    "glb": "assets/glb/Wago.2003-7692.glb",
+    "image": "assets/images/Wago.2003-7692.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2203-7645",
+    "displayName": "Multi level installation terminal block",
+    "category": "terminal",
+    "glb": "assets/glb/Wago.2203-7645.glb",
+    "image": "assets/images/Wago.2203-7645.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "249-119",
+    "displayName": "Mounting for labeling material",
+    "category": "marker_carrier",
+    "glb": "assets/glb/Wago.249-119.glb",
+    "image": "assets/images/Wago.249-119.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2204-1407",
+    "displayName": "Ground terminal block",
+    "category": "terminal",
+    "glb": "assets/glb/Wago.2204-1407.glb",
+    "image": "assets/images/Wago.2204-1407.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2004-1491",
+    "displayName": "End and partition plate for terminal block",
+    "category": "end_cover",
+    "glb": "assets/glb/Wago.2004-1491.glb",
+    "image": "assets/images/Wago.2004-1491.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2202-1407",
+    "displayName": "Ground terminal block",
+    "category": "terminal",
+    "glb": "assets/glb/Wago.2202-1407.glb",
+    "image": "assets/images/Wago.2202-1407.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "2002-1491",
+    "displayName": "End and partition plate for terminal block",
+    "category": "end_cover",
+    "glb": "assets/glb/Wago.2002-1491.glb",
+    "image": "assets/images/Wago.2002-1491.webp"
+  },
+  {
+    "manufacturer": "Wago",
+    "articleNumber": "249-116",
+    "displayName": "End bracket for terminal block",
+    "category": "end_bracket",
+    "glb": "assets/glb/Wago.249-116.glb",
+    "image": "assets/images/Wago.249-116.webp"
+  }
+]

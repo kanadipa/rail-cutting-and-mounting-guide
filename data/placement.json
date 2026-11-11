@@ -1,0 +1,1296 @@
+[
+  {
+    "bmk": "-U1",
+    "manufacturer": "Weidmueller",
+    "articleNumber": "0236500000",
+    "cutLengthMm": 306,
+    "placedItems": [
+      {
+        "bmk": "-1K1/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6AR00-0AA0",
+        "pose": {
+          "positionMm": [
+            58.25,
+            -14.06,
+            6.25
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-1K1/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6PA00-0AA0",
+        "pose": {
+          "positionMm": [
+            137.55,
+            -58.55,
+            -7.15
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-1K1/3",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7512-1DK01-0AB0",
+        "pose": {
+          "positionMm": [
+            31.55,
+            -58.55,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-1K2/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7134-6PA20-0BD0",
+        "pose": {
+          "positionMm": [
+            135.05,
+            -13.95,
+            13.37
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-1K2/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BD0",
+        "pose": {
+          "positionMm": [
+            147.95,
+            18.14,
+            -0.04
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-2K1/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7131-6BH01-0BA0",
+        "pose": {
+          "positionMm": [
+            155.1,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-2K1/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            157.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-2K2/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7131-6BH01-0BA0",
+        "pose": {
+          "positionMm": [
+            170.1,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-2K2/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            172.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-2K3/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7131-6BH01-0BA0",
+        "pose": {
+          "positionMm": [
+            185.1,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-2K3/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            187.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-3K1/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7132-6BH01-0BA0",
+        "pose": {
+          "positionMm": [
+            200.1,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-3K1/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            202.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-3K2/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7132-6BH01-0BA0",
+        "pose": {
+          "positionMm": [
+            215.1,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-3K2/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            217.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-3K3/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7132-6BH01-0BA0",
+        "pose": {
+          "positionMm": [
+            230.1,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-3K3/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            232.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-4K1/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7134-6HD01-0BA1",
+        "pose": {
+          "positionMm": [
+            245.1,
+            -15.8,
+            8.66
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-4K1/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            247.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-4K2/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7134-6HD01-0BA1",
+        "pose": {
+          "positionMm": [
+            260.1,
+            -15.8,
+            8.66
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-4K2/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            262.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-5K1/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7135-6HD00-0BA1",
+        "pose": {
+          "positionMm": [
+            275.1,
+            -15.8,
+            8.66
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-5K1/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            277.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-6K1/1",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7134-6JD00-0CA1",
+        "pose": {
+          "positionMm": [
+            290.05,
+            -15.8,
+            8.63
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "bmk": "-6K1/2",
+        "manufacturer": "Siemens",
+        "articleNumber": "6ES7193-6BP00-0BA0",
+        "pose": {
+          "positionMm": [
+            292.7,
+            -58.52,
+            -7.1
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "bmk": "-U2",
+    "manufacturer": "Weidmueller",
+    "articleNumber": "0236500000",
+    "cutLengthMm": 293,
+    "placedItems": [
+      {
+        "bmk": "-XD1:1/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2009-305",
+        "pose": {
+          "positionMm": [
+            31.55,
+            -0.03,
+            0
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:1/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2205-7641",
+        "pose": {
+          "positionMm": [
+            39.1,
+            -0.05,
+            0
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:1/3",
+        "manufacturer": "Wago",
+        "articleNumber": "249-117",
+        "pose": {
+          "positionMm": [
+            21.6,
+            0,
+            -0.01
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:10",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            89.7,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:11",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            94.9,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:12",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            100.1,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:13",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            105.3,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:14/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            115.7,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:14/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            110.5,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:15/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            121.7,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:15/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            116.5,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:16",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7645",
+        "pose": {
+          "positionMm": [
+            122.5,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:17/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            132.9,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:17/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7645",
+        "pose": {
+          "positionMm": [
+            127.7,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:18",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7645",
+        "pose": {
+          "positionMm": [
+            133.7,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:19/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            144.1,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:19/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            138.9,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:2",
+        "manufacturer": "Wago",
+        "articleNumber": "2205-7641",
+        "pose": {
+          "positionMm": [
+            45.3,
+            -0.05,
+            0
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:20",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7645",
+        "pose": {
+          "positionMm": [
+            144.9,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:21/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            155.3,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:21/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            150.1,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:22",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7645",
+        "pose": {
+          "positionMm": [
+            156.1,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:23/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            166.5,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:23/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            161.3,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:24/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2009-305",
+        "pose": {
+          "positionMm": [
+            172.45,
+            -0.03,
+            0
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:24/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7645",
+        "pose": {
+          "positionMm": [
+            167.3,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:3",
+        "manufacturer": "Wago",
+        "articleNumber": "2205-7641",
+        "pose": {
+          "positionMm": [
+            51.5,
+            -0.05,
+            0
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:4/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2003-7692",
+        "pose": {
+          "positionMm": [
+            62.9,
+            0,
+            -0.23
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:4/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            57.7,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:5",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            63.7,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:6",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            68.9,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:7",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            74.1,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:8",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            79.3,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XD1:9",
+        "manufacturer": "Wago",
+        "articleNumber": "2203-7641",
+        "pose": {
+          "positionMm": [
+            84.5,
+            -0.25,
+            -0.02
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE",
+        "manufacturer": "Wago",
+        "articleNumber": "249-119",
+        "pose": {
+          "positionMm": [
+            239.3,
+            0,
+            22.95
+          ],
+          "quaternion": [
+            0.5,
+            -0.5,
+            -0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:1/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2204-1407",
+        "pose": {
+          "positionMm": [
+            239.6,
+            -0.27,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:1/2",
+        "manufacturer": "Wago",
+        "articleNumber": "249-117",
+        "pose": {
+          "positionMm": [
+            229.6,
+            0,
+            -0.01
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:2/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2004-1491",
+        "pose": {
+          "positionMm": [
+            252,
+            0,
+            -0.85
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:2/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2204-1407",
+        "pose": {
+          "positionMm": [
+            245.8,
+            -0.27,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:3",
+        "manufacturer": "Wago",
+        "articleNumber": "2204-1407",
+        "pose": {
+          "positionMm": [
+            253,
+            -0.27,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:4",
+        "manufacturer": "Wago",
+        "articleNumber": "2204-1407",
+        "pose": {
+          "positionMm": [
+            259.2,
+            -0.27,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:5",
+        "manufacturer": "Wago",
+        "articleNumber": "2202-1407",
+        "pose": {
+          "positionMm": [
+            265.4,
+            0.02,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:6",
+        "manufacturer": "Wago",
+        "articleNumber": "2202-1407",
+        "pose": {
+          "positionMm": [
+            270.6,
+            0.02,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:7/1",
+        "manufacturer": "Wago",
+        "articleNumber": "2002-1491",
+        "pose": {
+          "positionMm": [
+            281,
+            -0.17,
+            -0.85
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:7/2",
+        "manufacturer": "Wago",
+        "articleNumber": "2202-1407",
+        "pose": {
+          "positionMm": [
+            275.8,
+            0.02,
+            0.05
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      },
+      {
+        "bmk": "-XE:7/3",
+        "manufacturer": "Wago",
+        "articleNumber": "249-116",
+        "pose": {
+          "positionMm": [
+            281.8,
+            0,
+            -0.01
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      }
+    ]
+  }
+]
