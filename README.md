@@ -1,3 +1,29 @@
+# Rail cutting & mounting guide
+
+## Run
+
+**Requirements:** Node.js 20.11 or newer, Docker (for PostgreSQL), a browser with WebGL. No accounts, no secrets.
+
+```bash
+docker compose up -d     # PostgreSQL on port 54329
+npm run setup            # install, create .env, migrate, import the job from data/
+npm run dev              # API and operator app together
+npm test                 # all tests (needs the database running)
+```
+
+- Operator app: **http://localhost:5173** (it opens on the step where the job stands)
+- API: http://localhost:3000/api (health: `/api/health`)
+- `npm run typecheck` checks all three packages. `npm run seed:reset` imports the job again and **deletes its progress**.
+- `npm run setup` is safe to repeat: an imported job and its progress are left alone.
+- Ports and the database address are in `.env` (created from `.env.example`). If you change
+  `POSTGRES_PORT`, change it in the two database URLs too.
+
+**Layout:** `server/` NestJS + Prisma API (`src/domain` holds the pure rules: mount order, cutting plan,
+gaps, grouping), `web/` the operator app (Vite + React, uses `lib/`), `lib/`, `data/`, `assets/` as delivered.
+Decisions and the data model are in [DECISIONS.md](DECISIONS.md). The original challenge text follows.
+
+---
+
 # Vetaion — Full-stack & UI/UX challenge
 
 ## Rail cutting & mounting guide
