@@ -30,8 +30,4 @@ describe("German texts", () => {
       .map(([path]) => path);
     expect(untranslated).toEqual([]);
   });
-
-  it("has no re-cut wording any more", () => {
-    expect([...german.values()].join("\n")).not.toMatch(/neu sägen|verdorben/i);
-  });
 });

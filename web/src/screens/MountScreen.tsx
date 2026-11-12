@@ -50,8 +50,8 @@ export function MountScreen({ rail }: { rail: Rail }) {
       if (progress.status === "DONE") navigate(paths.railDone(cabinet.id, rail.id));
     },
     onRejected: (error) => {
-      // Someone else moved this rail on, or took its cut back: show what is true now.
-      if (!hasCode(error, "STALE_PROGRESS") && !hasCode(error, "RAIL_NOT_CUT")) return;
+      // Someone else moved this rail on: show what is true now.
+      if (!hasCode(error, "STALE_PROGRESS")) return;
       setStale(true);
       void client.invalidateQueries({ queryKey: keys.rail(cabinet.id, rail.id) });
       void client.invalidateQueries({ queryKey: keys.cabinet(cabinet.id) });
