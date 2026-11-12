@@ -17,10 +17,11 @@ interface SaveButtonProps {
   disabled?: boolean;
   /** Says whether taps are ignored right now (see useTapLock). */
   isLocked?: () => boolean;
+  className?: string;
 }
 
 /** A button for an action that is saved on the server before the screen moves on. */
-export function SaveButton({ tone, primary, children, onTap, pending, retrying, disabled = false, isLocked }: SaveButtonProps) {
+export function SaveButton({ tone, primary, children, onTap, pending, retrying, disabled = false, isLocked, className = "" }: SaveButtonProps) {
   const { t } = useI18n();
   const [slow, setSlow] = useState(false);
 
@@ -40,7 +41,7 @@ export function SaveButton({ tone, primary, children, onTap, pending, retrying, 
     <Button
       tone={tone}
       primary={primary}
-      className={state}
+      className={`${state} ${className}`}
       disabled={pending || disabled}
       onClick={() => {
         if (isLocked?.()) return;

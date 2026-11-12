@@ -1,0 +1,27 @@
+/* Labels drawn inside the 3D view. */
+.dimension {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1.5px solid var(--navy);
+  background: var(--navy-soft);
+  color: var(--navy);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+  transform: translate(8px, 0);
+}
+
+.free {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1.5px solid var(--amber);
+  background: var(--amber-bg);
+  color: var(--amber-ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}

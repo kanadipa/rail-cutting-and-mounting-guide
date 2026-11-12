@@ -28,3 +28,15 @@ export function whereLine(where: WhereHint, t: Dictionary, mm: (value: number) =
     }
   }
 }
+
+/** The part this one clips onto, when it goes on another part and not onto the rail. */
+export function clipTargetBmk(where: WhereHint): string | null {
+  if (where.kind === "CLIP_ONTO") return where.onBmk;
+  if (where.kind === "CARRIER") return where.onBmk;
+  return null;
+}
+
+/** Whole millimetres from the rail's left end, for parts that sit directly on the rail. */
+export function distanceFromLeftMm(where: WhereHint): number | null {
+  return where.kind === "FIRST" || where.kind === "NEXT_TO" || where.kind === "AFTER_GAP" ? where.atMm : null;
+}
