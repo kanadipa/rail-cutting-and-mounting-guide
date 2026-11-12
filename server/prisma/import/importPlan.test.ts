@@ -91,6 +91,41 @@ describe("importPlan", () => {
     expect(await prisma.workEvent.count({ where: { cabinetId: before.id } })).toBe(0);
   });
 
+  it("gives the same mount order, part counts and links when the plan is imported again with reset", async () => {
+    /** What matters after an import: each rail's parts in order, and who they clip onto or warn about, by BMK. */
+    const snapshot = async () => {
+      const rails = await prisma.rail.findMany({
+        where: { cabinet: { name: CABINET } },
+        orderBy: { cutOrder: "asc" },
+        include: {
+          placedItems: { orderBy: { mountSeq: "asc" }, include: { mountsOn: true, planWarningItem: true } },
+        },
+      });
+      return rails.map((rail) => ({
+        bmk: rail.bmk,
+        partCount: rail.partCount,
+        parts: rail.placedItems.map((item) => ({
+          bmk: item.bmk,
+          mountSeq: item.mountSeq,
+          mountsOn: item.mountsOn?.bmk ?? null,
+          planWarning: item.planWarning,
+          warnsAbout: item.planWarningItem?.bmk ?? null,
+        })),
+      }));
+    };
+
+    const first = await snapshot();
+    await importPlan(prisma, options({ reset: true }));
+    const second = await snapshot();
+
+    expect(second).toEqual(first);
+    expect(second.map((rail) => rail.partCount)).toEqual([25, 46]);
+    // The comparison is only worth something if the plan has both kinds of link.
+    const parts = second.flatMap((rail) => rail.parts);
+    expect(parts.some((part) => part.mountsOn !== null)).toBe(true);
+    expect(parts.some((part) => part.warnsAbout !== null)).toBe(true);
+  });
+
   it("keeps one row per article however often the catalog is imported", async () => {
     const catalog = realCatalog();
     const keys = catalog.map(({ manufacturer, articleNumber }) => ({ manufacturer, articleNumber }));
