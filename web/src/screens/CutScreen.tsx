@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import type { RailSummary } from "../api/types";
@@ -14,10 +13,9 @@ import { useTapLock } from "../save/useTapLock";
 import { BarCutView } from "../three/BarCutView";
 import styles from "./Cut.module.css";
 
-/** Taking a cut back: a mistaken tap (undo) or a ruined piece (re-cut). */
+/** Taking a cut back after a mistaken tap. */
 interface Reversal {
   rail: RailSummary;
-  kind: "undo" | "recut";
   confirmReset: boolean;
 }
 
@@ -31,8 +29,6 @@ export function CutScreen() {
   const cutIds = new Set(rails.filter((rail) => rail.status !== "TO_CUT").map((rail) => rail.id));
   const lastSaved = t.connection.savedCut(cutIds.size, rails.length);
   const isLocked = useTapLock(current?.id ?? "all-cut");
-  /** A ruined piece the operator still has to confirm: re-cutting is never one accidental tap. */
-  const [ruined, setRuined] = useState<RailSummary | null>(null);
 
   const cut = useSave({ cabinetId: cabinet.id, lastSaved, save: (railId: number) => api.markCut(cabinet.id, railId) });
 
@@ -40,8 +36,7 @@ export function CutScreen() {
   const reverse = useSave({
     cabinetId: cabinet.id,
     lastSaved,
-    save: ({ rail, kind, confirmReset }: Reversal) =>
-      kind === "undo" ? api.undoCut(cabinet.id, rail.id, confirmReset) : api.recut(cabinet.id, rail.id, confirmReset),
+    save: ({ rail, confirmReset }: Reversal) => api.undoCut(cabinet.id, rail.id, confirmReset),
     onRejected: (error, request) => void reset.askIfRequired(error, request),
   });
 
@@ -49,11 +44,6 @@ export function CutScreen() {
     cabinet.bars.find((candidate) => candidate.pieces.some((piece) => piece.railId === railId)) ?? cabinet.bars[0];
   const bar = barOf(current?.id);
   const saving = cut.pending || reverse.pending;
-
-  const recutSource = (rail: RailSummary) => {
-    const from = barOf(rail.id);
-    return from && from.remnantMm >= rail.cutLengthMm ? t.cut.fromRest(mm(from.remnantMm)) : t.cut.fromNewBar;
-  };
 
   return (
     <div className={styles.screen}>
@@ -74,11 +64,8 @@ export function CutScreen() {
               <span className={styles.cardLength}>{mm(rail.cutLengthMm)}</span>
               {isCut && (
                 <div className={styles.cardActions}>
-                  <Button tone="quiet" disabled={saving} title={t.cut.undoHint} onClick={() => reverse.save({ rail, kind: "undo", confirmReset: false })}>
+                  <Button tone="quiet" disabled={saving} title={t.cut.undoHint} onClick={() => reverse.save({ rail, confirmReset: false })}>
                     {t.cut.undo}
-                  </Button>
-                  <Button tone="quiet" disabled={saving} onClick={() => setRuined(rail)}>
-                    {t.cut.wentWrong}
                   </Button>
                 </div>
               )}
@@ -143,20 +130,6 @@ export function CutScreen() {
             {t.cut.startMounting} →
           </Button>
         </section>
-      )}
-
-      {ruined && (
-        <ConfirmDialog
-          question={t.cut.recutQuestion(ruined.bmk, mm(ruined.cutLengthMm), recutSource(ruined))}
-          yes={t.cut.recutYes}
-          no={t.cut.recutNo}
-          onNo={() => setRuined(null)}
-          onYes={() => {
-            // Asked once here; the server still asks again when parts are already mounted.
-            reverse.save({ rail: ruined, kind: "recut", confirmReset: false });
-            setRuined(null);
-          }}
-        />
       )}
 
       {reset.pending && (

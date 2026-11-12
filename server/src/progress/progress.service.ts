@@ -39,12 +39,15 @@ export class ProgressService {
 
   /** The operator tapped Done by mistake: the piece is not cut yet. */
   undoCut(cabinetId: number, railId: number, confirmReset: boolean): Promise<ProgressView> {
-    return this.backToUncut(cabinetId, railId, confirmReset, "UNCUT");
-  }
-
-  /** The piece is ruined and has to be cut again. */
-  recut(cabinetId: number, railId: number, confirmReset: boolean): Promise<ProgressView> {
-    return this.backToUncut(cabinetId, railId, confirmReset, "RECUT");
+    return this.change(cabinetId, railId, async (tx, rail) => {
+      if (rail.cutAt === null) return view(rail, false);
+      if (rail.mountedCount > 0 && !confirmReset) {
+        throw new AppError("RESET_REQUIRED", "Parts are mounted on this rail", { mountedCount: rail.mountedCount });
+      }
+      await this.progress.setProgress(tx, railId, null, 0);
+      await this.progress.addEvent(tx, rail, "UNCUT");
+      return view({ ...rail, cutAt: null, mountedCount: 0 }, true);
+    });
   }
 
   /**
@@ -72,18 +75,6 @@ export class ProgressService {
       const partId = await this.progress.findPartId(tx, railId, mounting ? to : from);
       await this.progress.addEvent(tx, rail, mounting ? "MOUNT" : "UNMOUNT", partId);
       return view({ ...rail, mountedCount: to }, true);
-    });
-  }
-
-  private backToUncut(cabinetId: number, railId: number, confirmReset: boolean, event: "UNCUT" | "RECUT") {
-    return this.change(cabinetId, railId, async (tx, rail) => {
-      if (rail.cutAt === null) return view(rail, false);
-      if (rail.mountedCount > 0 && !confirmReset) {
-        throw new AppError("RESET_REQUIRED", "Parts are mounted on this rail", { mountedCount: rail.mountedCount });
-      }
-      await this.progress.setProgress(tx, railId, null, 0);
-      await this.progress.addEvent(tx, rail, event);
-      return view({ ...rail, cutAt: null, mountedCount: 0 }, true);
     });
   }
 

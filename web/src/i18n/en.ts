@@ -23,14 +23,7 @@ export const en = {
     current: "Current",
     cut: "Cut ✓",
     undo: "Undo",
-    wentWrong: "Piece ruined",
     listCount: (done: number, total: number) => `${done} of ${total} done`,
-    recutQuestion: (bmk: string, length: string, source: string) =>
-      `Is ${bmk} ruined (wrong length, bent)? Put it in the scrap box. ${bmk} goes back to "to cut": cut a new ${length} piece ${source}.`,
-    fromRest: (left: string) => `from the rest of the bar (${left} left)`,
-    fromNewBar: "from a new bar",
-    recutYes: "Yes, cut it again",
-    recutNo: "No, the piece is fine",
     undoHint: "Tapped Done too early",
     cutAt: (at: string) => `Cut at ${at}`,
     legendCut: "Already cut",
@@ -121,8 +114,8 @@ export const en = {
 
   confirm: {
     reset: (bmk: string, count: number) =>
-      `${bmk} has ${count} ${count === 1 ? "part" : "parts"} mounted. Take them off and re-cut?`,
-    yes: "Yes, re-cut",
+      `${bmk} has ${count} ${count === 1 ? "part" : "parts"} mounted. Take them off and undo the cut?`,
+    yes: "Yes, undo the cut",
     no: "No, keep it",
   },
 

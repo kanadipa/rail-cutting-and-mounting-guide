@@ -24,14 +24,7 @@ export const de: Dictionary = {
     current: "Aktuell",
     cut: "Gesägt ✓",
     undo: "Rückgängig",
-    wentWrong: "Stück verdorben",
     listCount: (done, total) => `${done} von ${total} fertig`,
-    recutQuestion: (bmk, length, source) =>
-      `Ist ${bmk} verdorben (falsche Länge, verbogen)? Leg es in den Schrott. ${bmk} kommt zurück auf „zu sägen“: ein neues Stück ${length} ${source} sägen.`,
-    fromRest: (left) => `vom Rest der Stange (noch ${left})`,
-    fromNewBar: "von einer neuen Stange",
-    recutYes: "Ja, neu sägen",
-    recutNo: "Nein, Stück ist gut",
     undoHint: "Zu früh auf Fertig getippt",
     cutAt: (at) => `Schnitt bei ${at}`,
     legendCut: "Schon gesägt",
@@ -122,8 +115,8 @@ export const de: Dictionary = {
 
   confirm: {
     reset: (bmk, count) =>
-      `Auf ${bmk} ${count === 1 ? "ist 1 Teil" : `sind ${count} Teile`} montiert. Abnehmen und neu sägen?`,
-    yes: "Ja, neu sägen",
+      `Auf ${bmk} ${count === 1 ? "ist 1 Teil" : `sind ${count} Teile`} montiert. Abnehmen und den Schnitt zurücknehmen?`,
+    yes: "Ja, zurücknehmen",
     no: "Nein, so lassen",
   },
 
