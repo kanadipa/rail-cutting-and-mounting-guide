@@ -33,6 +33,7 @@ export function MountScreen({ rail }: { rail: Rail }) {
   const navigate = useNavigate();
   const client = useQueryClient();
   const [wholeRail, setWholeRail] = useState(false);
+  const [rotating, setRotating] = useState(false);
   const [stale, setStale] = useState(false);
 
   const mounted = rail.mountedCount;
@@ -86,10 +87,15 @@ export function MountScreen({ rail }: { rail: Rail }) {
         <PartCard part={part} />
         <div className={styles.visual}>
           <div className={styles.view}>
-            <MountView rail={rail} current={part} wholeRail={wholeRail} />
-            <Button tone="secondary" className={styles.viewToggle} aria-pressed={wholeRail} onClick={() => setWholeRail((whole) => !whole)}>
-              {wholeRail ? t.mount.closeUp : t.mount.wholeRail}
-            </Button>
+            <MountView rail={rail} current={part} wholeRail={wholeRail} free={rotating} />
+            <div className={styles.viewToggles}>
+              <Button tone="secondary" aria-pressed={rotating} onClick={() => setRotating((on) => !on)}>
+                {rotating ? t.mount.lockView : t.mount.rotate}
+              </Button>
+              <Button tone="secondary" aria-pressed={wholeRail} onClick={() => setWholeRail((whole) => !whole)}>
+                {wholeRail ? t.mount.closeUp : t.mount.wholeRail}
+              </Button>
+            </div>
           </div>
           <PositionStrip parts={rail.parts} mountedCount={mounted} />
         </div>
