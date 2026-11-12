@@ -59,7 +59,7 @@
   background: #cbc8bd;
 }
 
-/* The design's small quiet button (undo-btn): for rare, low-stakes actions such as taking the last part off. */
+/* The design's small quiet button: for rare, low-stakes actions such as taking the last part off. */
 .quiet {
   min-height: 42px;
   padding: 0 14px;
