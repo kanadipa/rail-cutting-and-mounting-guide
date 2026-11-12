@@ -24,27 +24,7 @@ export default defineConfig({
     port: 5173,
     // The operator app imports the 3D toolkit from ../lib.
     fs: { allow: [projectRoot] },
-    proxy: {
-      "/api": {
-        target: `http://localhost:${apiPort}`,
-        configure: (proxy) => {
-          // While the API compiles, every /api call is refused. The app's connection banner already
-          // covers a missing API, so that one error is not logged. Vite adds its own "error" listener
-          // after this hook runs, so the listener is wrapped as it is added. Other errors still reach it.
-          const addListener = proxy.on.bind(proxy) as (event: string, listener: (...args: any[]) => void) => unknown;
-          const refused = (error: NodeJS.ErrnoException & { errors?: NodeJS.ErrnoException[] }) =>
-            error.code === "ECONNREFUSED" || error.errors?.some((each) => each.code === "ECONNREFUSED") === true;
-          proxy.on = ((event: string, listener: (...args: any[]) => void) => {
-            if (event !== "error") return addListener(event, listener);
-            return addListener(event, (error, request, response, target) => {
-              if (!refused(error)) return listener(error, request, response, target);
-              if ("writeHead" in response && !response.headersSent) response.writeHead(502).end();
-              else response.end();
-            });
-          }) as typeof proxy.on;
-        },
-      },
-    },
+    proxy: { "/api": `http://localhost:${apiPort}` },
   },
   test: { environment: "jsdom", include: ["src/**/*.test.{ts,tsx}"], restoreMocks: true },
 });
