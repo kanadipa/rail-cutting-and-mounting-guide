@@ -59,7 +59,27 @@ describe("mountOrder", () => {
     ]);
   });
 
-  it("puts a marker carrier right after the last part it sits on and stores the span", () => {
+  it("puts a marker carrier after the last part of its BMK group and clips it onto the part under it", () => {
+    const steps = mountOrder([
+      part("-XE", 10, 20, 25, "marker_carrier"),
+      part("-XD:9", 0, 10),
+      part("-XE:1/2", 10, 20),
+      part("-XE:1/1", 20, 30),
+      part("-XE:2", 30, 40),
+      part("-XF:1", 40, 50),
+    ]);
+    expect(steps.map((step) => step.bmk)).toEqual(["-XD:9", "-XE:1/2", "-XE:1/1", "-XE:2", "-XE", "-XF:1"]);
+    const carrier = steps[4];
+    expect(carrier.mountsOnBmk).toBe("-XE:1/2");
+    expect([carrier.labelsFirstSeq, carrier.labelsLastSeq]).toEqual([2, 4]);
+  });
+
+  it("does not take a longer BMK for part of the carrier's group", () => {
+    const steps = mountOrder([part("-XE", 0, 10, 25, "marker_carrier"), part("-XE:1", 0, 10), part("-XE2:1", 10, 20)]);
+    expect(steps.map((step) => step.bmk)).toEqual(["-XE:1", "-XE", "-XE2:1"]);
+  });
+
+  it("falls back to the parts under a carrier whose BMK names no group", () => {
     const steps = mountOrder([
       part("carrier", 10, 30, 25, "marker_carrier"),
       part("A", 0, 10),
@@ -68,15 +88,19 @@ describe("mountOrder", () => {
       part("D", 30, 40),
     ]);
     expect(steps.map((step) => step.bmk)).toEqual(["A", "B", "C", "carrier", "D"]);
-    const carrier = steps[3];
-    expect([carrier.labelsFirstSeq, carrier.labelsLastSeq]).toEqual([2, 3]);
-    expect(carrier.mountsOnBmk).toBeNull();
+    expect([steps[3].labelsFirstSeq, steps[3].labelsLastSeq]).toEqual([2, 3]);
+    expect(steps[3].mountsOnBmk).toBe("B");
   });
 
   it("does not let a carrier claim a neighbour it only touches", () => {
     const steps = mountOrder([part("carrier", 0, 10, 25, "marker_carrier"), part("A", 0, 10), part("B", 9.9, 20)]);
     expect(steps.map((step) => step.bmk)).toEqual(["A", "carrier", "B"]);
     expect([steps[1].labelsFirstSeq, steps[1].labelsLastSeq]).toEqual([1, 1]);
+  });
+
+  it("never mounts a carrier before the part it sits on, even when that part is outside its group", () => {
+    const steps = mountOrder([part("-XE", 20, 30, 25, "marker_carrier"), part("-XE:1", 0, 10), part("bracket", 20, 30)]);
+    expect(steps.map((step) => step.bmk)).toEqual(["-XE:1", "bracket", "-XE"]);
   });
 });
 
