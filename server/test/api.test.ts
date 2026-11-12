@@ -174,17 +174,17 @@ describe("cutting", () => {
     expect((await api().get(railUrl())).body).toMatchObject({ status: "IN_PROGRESS", mountedCount: 2 });
   });
 
-  it("re-cuts a rail with parts mounted once confirmed, back to nothing mounted", async () => {
+  it("undoes a cut with parts mounted once confirmed, back to nothing mounted", async () => {
     await api().put(railUrl("/cut"));
     await step(0, 1);
-    await api().post(railUrl("/recut")).send({}).expect(409);
-    const response = await api().post(railUrl("/recut")).send({ confirmReset: true }).expect(200);
+    await api().delete(railUrl("/cut")).send({}).expect(409);
+    const response = await api().delete(railUrl("/cut")).send({ confirmReset: true }).expect(200);
     expect(response.body).toMatchObject({ status: "TO_CUT", cutAt: null, mountedCount: 0, changed: true });
-    expect(await eventTypes()).toEqual(["CUT", "MOUNT", "RECUT"]);
+    expect(await eventTypes()).toEqual(["CUT", "MOUNT", "UNCUT"]);
   });
 
-  it("re-cutting a rail that is not cut changes nothing", async () => {
-    const response = await api().post(railUrl("/recut")).send({}).expect(200);
+  it("undoing a rail that is not cut changes nothing", async () => {
+    const response = await api().delete(railUrl("/cut")).expect(200);
     expect(response.body.changed).toBe(false);
     expect(await eventTypes()).toEqual([]);
   });
