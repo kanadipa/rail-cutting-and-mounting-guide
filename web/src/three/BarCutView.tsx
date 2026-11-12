@@ -26,6 +26,8 @@ interface BarCutViewProps {
   /** The piece to cut now; null once the bar is used up. */
   currentRailId: number | null;
   cutRailIds: Set<number>;
+  /** Frame the whole raw bar instead of the stretch around the current piece. */
+  wholeBar?: boolean;
   labels: { cutAt: (at: number) => string; mm: (value: number) => string };
 }
 
@@ -51,7 +53,7 @@ interface Segment {
   model: THREE.Group;
 }
 
-function BarModel({ glbUrl, bar, currentRailId, cutRailIds, labels }: BarCutViewProps) {
+function BarModel({ glbUrl, bar, currentRailId, cutRailIds, wholeBar = false, labels }: BarCutViewProps) {
   const { model } = useGlb(glbUrl);
   const segments = useMemo<Segment[]>(() => {
     if (!model) return [];
@@ -81,8 +83,9 @@ function BarModel({ glbUrl, bar, currentRailId, cutRailIds, labels }: BarCutView
   const cutStart = current && current.offsetMm > 0 && previous && !cutRailIds.has(previous.railId) ? current.offsetMm : null;
 
   // The framing window: from the bar's start (or the piece before) to a bit past the saw line.
-  const windowFrom = (current ? Math.max(0, current.offsetMm - 120) : 0) - BEFORE_MM;
-  const windowTo = cutEnd !== null ? Math.min(bar.barLengthMm, cutEnd + AFTER_CUT_MM) + BEFORE_MM : bar.barLengthMm + BEFORE_MM;
+  const aroundPiece = current !== null && !wholeBar;
+  const windowFrom = (aroundPiece ? Math.max(0, current.offsetMm - 120) : 0) - BEFORE_MM;
+  const windowTo = aroundPiece && cutEnd !== null ? Math.min(bar.barLengthMm, cutEnd + AFTER_CUT_MM) + BEFORE_MM : bar.barLengthMm + BEFORE_MM;
 
   const group = useRef<THREE.Group>(null);
   const frame = useRef<THREE.Mesh>(null);

@@ -28,6 +28,7 @@ export const de: Dictionary = {
     legendCut: "Schon gesägt",
     legendNow: "Jetzt sägen",
     legendRest: "Rest der Stange",
+    wholeBar: "Ganze Stange",
     before: "Bevor es in die Ablage kommt:",
     profile: (profile) => `TS ${profile}`,
     fromBar: (bar) => `Stange ${bar}`,

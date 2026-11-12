@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import type { RailSummary } from "../api/types";
@@ -5,6 +6,7 @@ import { useCabinetContext } from "../app/CabinetLayout";
 import { paths } from "../app/landing";
 import { Button } from "../components/Button";
 import { SaveButton } from "../components/SaveButton";
+import { IconButton, ViewKeys } from "../components/ViewKeys";
 import { useI18n } from "../i18n/I18nProvider";
 import { useSave } from "../save/useSave";
 import { useTapLock } from "../save/useTapLock";
@@ -21,6 +23,8 @@ export function CutScreen() {
   const cutIds = new Set(rails.filter((rail) => rail.status !== "TO_CUT").map((rail) => rail.id));
   const lastSaved = t.connection.savedCut(cutIds.size, rails.length);
   const isLocked = useTapLock(current?.id ?? "all-cut");
+  /** Off: the stretch around the piece to cut. On: the whole raw bar with every piece and the remnant. */
+  const [wholeBar, setWholeBar] = useState(false);
 
   const cut = useSave({ cabinetId: cabinet.id, lastSaved, save: (railId: number) => api.markCut(cabinet.id, railId) });
 
@@ -68,9 +72,27 @@ export function CutScreen() {
                 bar={bar}
                 currentRailId={current.id}
                 cutRailIds={cutIds}
+                wholeBar={wholeBar}
                 labels={{ cutAt: (at) => t.cut.cutAt(mm(at)), mm }}
               />
             )}
+            <ViewKeys label={t.cut.wholeBar}>
+              <IconButton label={t.cut.wholeBar} pressed={wholeBar} onClick={() => setWholeBar((on) => !on)}>
+                {wholeBar ? (
+                  // Whole bar: a long bar cut into pieces.
+                  <>
+                    <path d="M2 12h20" />
+                    <path d="M2 8v8M9 8v8M14 8v8M22 8v8" />
+                  </>
+                ) : (
+                  // Around the piece: one stretch inside a frame.
+                  <>
+                    <path d="M4 9V5h4M16 5h4v4M20 15v4h-4M8 19H4v-4" />
+                    <path d="M9 12h6" />
+                  </>
+                )}
+              </IconButton>
+            </ViewKeys>
             {bar && <Legend barNumber={bar.barIndex + 1} barLength={mm(bar.barLengthMm)} />}
           </div>
           {/* A reminder, not a checklist: nothing here is tapped. */}
