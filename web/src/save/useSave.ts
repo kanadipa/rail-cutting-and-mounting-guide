@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { isRetryable } from "../api/client";
 import { applyProgress } from "../api/queries";
 import type { Progress } from "../api/types";
@@ -27,6 +27,11 @@ export function useSave<Variables>({ cabinetId, save, lastSaved, onSaved, onReje
   const client = useQueryClient();
   const { reportSaveFailing, reportSaveSettled } = useConnection();
 
+  // Set in the tap itself: the mutation reports "pending" a moment later, and a second tap
+  // must not slip through in between.
+  const inFlight = useRef(false);
+  const [submitted, setSubmitted] = useState(false);
+
   const mutation = useMutation({
     mutationFn: save,
     // Keep trying when the browser thinks it is offline too; it is often wrong on a bench network.
@@ -38,13 +43,28 @@ export function useSave<Variables>({ cabinetId, save, lastSaved, onSaved, onReje
       onSaved?.(progress, variables);
     },
     onError: onRejected,
-    onSettled: reportSaveSettled,
+    onSettled: () => {
+      inFlight.current = false;
+      setSubmitted(false);
+      reportSaveSettled();
+    },
   });
+  const { mutate } = mutation;
+
+  const submit = useCallback(
+    (variables: Variables) => {
+      if (inFlight.current) return;
+      inFlight.current = true;
+      setSubmitted(true);
+      mutate(variables);
+    },
+    [mutate],
+  );
 
   const retrying = mutation.isPending && mutation.failureCount > 0;
   useEffect(() => {
     if (retrying) reportSaveFailing(lastSaved);
   }, [retrying, lastSaved, reportSaveFailing]);
 
-  return { save: mutation.mutate, pending: mutation.isPending, retrying, failed: mutation.isError };
+  return { save: submit, pending: submitted || mutation.isPending, retrying, failed: mutation.isError };
 }
