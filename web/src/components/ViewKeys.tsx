@@ -56,7 +56,7 @@ export function LinkKey({
   children,
 }: {
   to: string;
-  /** What a screen reader says; the visible word is `text`. */
+  /** The tooltip. The visible word, `text`, is also the accessible name, so the two always match. */
   label: string;
   text: string;
   disabled: boolean;
@@ -68,7 +68,6 @@ export function LinkKey({
     <Link
       to={to}
       className={styles.linkKey}
-      aria-label={label}
       title={label}
       aria-disabled={disabled || undefined}
       draggable={false}
