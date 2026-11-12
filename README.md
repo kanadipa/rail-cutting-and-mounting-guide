@@ -42,3 +42,18 @@ data/ assets/ docs/ tests/   as delivered
 ```
 
 `/assets` (3D models and pictures) is served by the Vite dev server; there is no production build yet.
+
+## When something goes wrong
+
+- **The screen only shows what the server confirmed.** Done disables at the tap and the next part appears
+  only after the save is answered. "Saving…" appears only if that takes longer than 150 ms.
+- **No connection:** the same save is sent again with growing pauses (up to 8 s), and the screen says
+  "Not saved · retrying". A banner names the last saved step ("Last saved: part 12 of 25. Keep the rail as
+  it is."). A repeated step does nothing the second time (compare-and-set), so retrying is harmless.
+- **The server refuses:** a refusal is never retried. The API answers with a stable error code
+  (`STALE_PROGRESS`, `RAIL_NOT_CUT`, `INVALID_STEP`, `NOT_FOUND`, `DATABASE_UNAVAILABLE`, …). The screen turns the
+  code into its own short wording, in the chosen language, and never shows the server's text.
+- **Another screen moved the rail on:** the screen says so and reloads the real state.
+- **Unknown cabinet or rail:** a plain "not found" page with a way back.
+- **Server side:** every progress change writes one structured log line (request id, what was asked, what
+  happened). A database outage is a 503. `/api/health` answers only when the database does; the screen uses it to know saving works again.
