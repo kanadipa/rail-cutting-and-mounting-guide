@@ -20,6 +20,7 @@ docker compose up -d     # PostgreSQL on port 54329
 npm run setup            # install, create .env, migrate, import the job from data/
 npm run dev              # API and operator app together
 npm test                 # all tests (needs the database running)
+npm run test:unit        # no database needed
 ```
 
 - Operator app: **http://localhost:5173** (it opens on the step where the job stands).
