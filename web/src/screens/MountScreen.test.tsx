@@ -5,7 +5,7 @@ import { pass, renderApp } from "../test/renderApp";
 
 // jsdom has no WebGL. The 3D views are checked by eye; these tests are about saving.
 vi.mock("../three/MountView", () => ({ MountView: () => null }));
-vi.mock("../three/CutPieceView", () => ({ CutPieceView: () => null }));
+vi.mock("../three/BarCutView", () => ({ BarCutView: () => null }));
 
 const MOUNT_URL = "/cabinets/1/rails/5/mount";
 const doneButton = () => screen.getByRole("button", { name: /Done|Saving|Not saved|Finish rail/ });
