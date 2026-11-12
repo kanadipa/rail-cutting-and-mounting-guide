@@ -60,27 +60,29 @@ describe("cut screen", () => {
 
     fireEvent.click(undo);
     await pass(0);
-    expect(server.undos).toEqual(["unconfirmed"]);
+    expect(server.undos).toBe(1);
     expect(server.cutAt).toBeNull();
     expect(doneButton().textContent).toBe("Deburred and marked -U1 · Done");
   });
 
-  it("asks before undoing a cut that has parts mounted, and only then resets the rail", async () => {
+  it("dims Undo with a reason when parts are mounted, and sends nothing when it is tapped", async () => {
     await openCutScreen({ mountedCount: 2 });
-    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
-    await pass(0);
-    expect(server.mountedCount).toBe(2);
-    expect(screen.getByText(/has 2 parts mounted/)).toBeTruthy();
+    const undo = screen.getByRole("button", { name: "Undo" });
+    expect(undo.getAttribute("aria-disabled")).toBe("true");
+    expect(undo.getAttribute("aria-describedby")).toBe(screen.getByText("Take the parts off step by step to undo the cut.").id);
 
-    fireEvent.click(screen.getByRole("button", { name: "No, keep it" }));
+    fireEvent.click(undo);
+    await pass(0);
+    expect(server.undos).toBe(0);
     expect(server.mountedCount).toBe(2);
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
 
-    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
-    await pass(0);
-    fireEvent.click(screen.getByRole("button", { name: "Yes, undo the cut" }));
-    await pass(0);
-    expect(server.undos).toEqual(["unconfirmed", "unconfirmed", "confirmed"]);
-    expect(server.cutAt).toBeNull();
-    expect(server.mountedCount).toBe(0);
+  it("keeps Undo usable on a cut rail with nothing mounted", async () => {
+    await openCutScreen({});
+    const undo = screen.getByRole("button", { name: "Undo" });
+    expect(undo.getAttribute("aria-disabled")).toBeNull();
+    expect(undo).toHaveProperty("disabled", false);
+    expect(screen.queryByText("Take the parts off step by step to undo the cut.")).toBeNull();
   });
 });

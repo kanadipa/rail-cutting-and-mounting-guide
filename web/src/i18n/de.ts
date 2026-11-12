@@ -25,6 +25,7 @@ export const de: Dictionary = {
     cut: "Gesägt ✓",
     undo: "Rückgängig",
     listCount: (done, total) => `${done} von ${total} fertig`,
+    undoBlocked: "Teile Schritt für Schritt abnehmen, um den Schnitt zurückzunehmen.",
     undoHint: "Zu früh auf Fertig getippt",
     cutAt: (at) => `Schnitt bei ${at}`,
     legendCut: "Schon gesägt",
@@ -110,13 +111,6 @@ export const de: Dictionary = {
     savedPart: (count, total) => `Teil ${count} von ${total}`,
     savedNothing: (bmk) => `noch nichts auf ${bmk} montiert`,
     savedCut: (done, total) => `${done} von ${total} Schienen gesägt`,
-  },
-
-  confirm: {
-    reset: (bmk, count) =>
-      `Auf ${bmk} ${count === 1 ? "ist 1 Teil" : `sind ${count} Teile`} montiert. Abnehmen und den Schnitt zurücknehmen?`,
-    yes: "Ja, zurücknehmen",
-    no: "Nein, so lassen",
   },
 
   notFound: {

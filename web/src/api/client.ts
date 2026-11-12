@@ -49,8 +49,7 @@ export const api = {
   cabinet: (cabinetId: number) => request<Cabinet>("GET", `/cabinets/${cabinetId}`),
   rail: (cabinetId: number, railId: number) => request<Rail>("GET", rail(cabinetId, railId)),
   markCut: (cabinetId: number, railId: number) => request<Progress>("PUT", `${rail(cabinetId, railId)}/cut`),
-  undoCut: (cabinetId: number, railId: number, confirmReset: boolean) =>
-    request<Progress>("DELETE", `${rail(cabinetId, railId)}/cut`, { confirmReset }),
+  undoCut: (cabinetId: number, railId: number) => request<Progress>("DELETE", `${rail(cabinetId, railId)}/cut`),
   step: (cabinetId: number, railId: number, from: number, to: number) =>
     request<Progress>("PUT", `${rail(cabinetId, railId)}/progress`, { from, to }),
 };

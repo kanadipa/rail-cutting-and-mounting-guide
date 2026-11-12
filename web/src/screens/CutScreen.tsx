@@ -4,20 +4,12 @@ import type { RailSummary } from "../api/types";
 import { useCabinetContext } from "../app/CabinetLayout";
 import { paths } from "../app/landing";
 import { Button } from "../components/Button";
-import { ConfirmDialog } from "../components/ConfirmDialog";
 import { SaveButton } from "../components/SaveButton";
 import { useI18n } from "../i18n/I18nProvider";
-import { useResetConfirmation } from "../save/useResetConfirmation";
 import { useSave } from "../save/useSave";
 import { useTapLock } from "../save/useTapLock";
 import { BarCutView } from "../three/BarCutView";
 import styles from "./Cut.module.css";
-
-/** Taking a cut back after a mistaken tap. */
-interface Reversal {
-  rail: RailSummary;
-  confirmReset: boolean;
-}
 
 /** Step 1: cut every rail from the bar, in the planned order, one at a time. */
 export function CutScreen() {
@@ -32,12 +24,11 @@ export function CutScreen() {
 
   const cut = useSave({ cabinetId: cabinet.id, lastSaved, save: (railId: number) => api.markCut(cabinet.id, railId) });
 
-  const reset = useResetConfirmation<Reversal>();
+  // Undo is for a Done tapped by mistake, so it is only sent while nothing is mounted on the rail.
   const reverse = useSave({
     cabinetId: cabinet.id,
     lastSaved,
-    save: ({ rail, confirmReset }: Reversal) => api.undoCut(cabinet.id, rail.id, confirmReset),
-    onRejected: (error, request) => void reset.askIfRequired(error, request),
+    save: (rail: RailSummary) => api.undoCut(cabinet.id, rail.id),
   });
 
   const barOf = (railId: number | undefined) =>
@@ -64,9 +55,21 @@ export function CutScreen() {
               <span className={styles.cardLength}>{mm(rail.cutLengthMm)}</span>
               {isCut && (
                 <div className={styles.cardActions}>
-                  <Button tone="quiet" disabled={saving} title={t.cut.undoHint} onClick={() => reverse.save({ rail, confirmReset: false })}>
-                    {t.cut.undo}
-                  </Button>
+                  {rail.mountedCount > 0 ? (
+                    <>
+                      {/* Parts are on the rail: it comes apart step by step, not with one tap. */}
+                      <Button tone="quiet" aria-disabled="true" aria-describedby={`undo-blocked-${rail.id}`} onClick={() => undefined}>
+                        {t.cut.undo}
+                      </Button>
+                      <p id={`undo-blocked-${rail.id}`} className={styles.undoBlocked}>
+                        {t.cut.undoBlocked}
+                      </p>
+                    </>
+                  ) : (
+                    <Button tone="quiet" disabled={saving} title={t.cut.undoHint} onClick={() => reverse.save(rail)}>
+                      {t.cut.undo}
+                    </Button>
+                  )}
                 </div>
               )}
             </article>
@@ -132,18 +135,6 @@ export function CutScreen() {
         </section>
       )}
 
-      {reset.pending && (
-        <ConfirmDialog
-          question={t.confirm.reset(reset.pending.request.rail.bmk, reset.pending.mountedCount)}
-          yes={t.confirm.yes}
-          no={t.confirm.no}
-          onNo={reset.clear}
-          onYes={() => {
-            reverse.save({ ...reset.pending!.request, confirmReset: true });
-            reset.clear();
-          }}
-        />
-      )}
     </div>
   );
 

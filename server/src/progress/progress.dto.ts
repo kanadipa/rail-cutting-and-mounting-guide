@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsOptional, Min } from "class-validator";
+import { IsInt, Min } from "class-validator";
 
 /** One mount step: from the count the screen shows to the count it wants. */
 export class StepDto {
@@ -9,11 +9,4 @@ export class StepDto {
   @IsInt()
   @Min(0)
   to!: number;
-}
-
-export class ResetDto {
-  /** The operator confirmed that the mounted parts come off. */
-  @IsOptional()
-  @IsBoolean()
-  confirmReset?: boolean;
 }

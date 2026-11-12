@@ -283,3 +283,12 @@
     font-size: 60px;
   }
 }
+
+/* Why Undo is dimmed: parts are on the rail. */
+.undoBlocked {
+  flex-basis: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}

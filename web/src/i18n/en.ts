@@ -24,6 +24,7 @@ export const en = {
     cut: "Cut ✓",
     undo: "Undo",
     listCount: (done: number, total: number) => `${done} of ${total} done`,
+    undoBlocked: "Take the parts off step by step to undo the cut.",
     undoHint: "Tapped Done too early",
     cutAt: (at: string) => `Cut at ${at}`,
     legendCut: "Already cut",
@@ -109,13 +110,6 @@ export const en = {
     savedPart: (count: number, total: number) => `part ${count} of ${total}`,
     savedNothing: (bmk: string) => `nothing mounted on ${bmk} yet`,
     savedCut: (done: number, total: number) => `${done} of ${total} rails cut`,
-  },
-
-  confirm: {
-    reset: (bmk: string, count: number) =>
-      `${bmk} has ${count} ${count === 1 ? "part" : "parts"} mounted. Take them off and undo the cut?`,
-    yes: "Yes, undo the cut",
-    no: "No, keep it",
   },
 
   notFound: {
