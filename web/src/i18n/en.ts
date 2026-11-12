@@ -58,7 +58,8 @@ export const en = {
     notCut: (bmk: string) => `${bmk} is not cut yet.`,
     goCut: "Go to cutting",
     stale: "Progress was updated on another screen.",
-    noModel: "No 3D view for this part",
+    rotate: "Rotate 3D",
+    lockView: "Front view",
   },
 
   railDone: {

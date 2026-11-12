@@ -59,7 +59,8 @@ export const de: Dictionary = {
     notCut: (bmk) => `${bmk} ist noch nicht gesägt.`,
     goCut: "Zum Sägen",
     stale: "Der Fortschritt wurde an einem anderen Bildschirm geändert.",
-    noModel: "Keine 3D-Ansicht für dieses Teil",
+    rotate: "3D drehen",
+    lockView: "Frontansicht",
   },
 
   railDone: {
