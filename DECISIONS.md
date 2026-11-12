@@ -40,7 +40,8 @@ transaction) and measures each article's model once. The heavy traffic is the 3D
 
 ## Not built, on purpose
 - **Skipping a part:** parts sit flush, so a skipped part can't go in later without taking others off.
-- Undoing a cut with parts mounted: parts come off step by step, so no bulk reset. The server still refuses it.
+- Undoing a confirmed cut: the cut is final; the operator takes parts off one at a time while mounting.
+  This keeps the bar plan and the history consistent.
 - Scan confirmation, a real offline mode, operators/login, a planner dashboard.
 
 ## Found in the data

@@ -59,7 +59,7 @@
   background: #cbc8bd;
 }
 
-/* The design's small undo button. */
+/* The design's small quiet button (undo-btn): for rare, low-stakes actions such as taking the last part off. */
 .quiet {
   min-height: 42px;
   padding: 0 14px;
@@ -77,11 +77,6 @@
 
 .button:disabled {
   cursor: default;
-}
-/* A button that says "not now" but stays focusable, so its note can be read out. */
-.button[aria-disabled="true"] {
-  opacity: 0.4;
-  cursor: not-allowed;
 }
 /* A button that is saving keeps its colour: it is busy, not unavailable. */
 .button:disabled:not(.busy) {

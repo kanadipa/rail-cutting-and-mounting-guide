@@ -51,38 +51,13 @@ describe("cut screen", () => {
     expect(within(reminder).queryAllByRole("checkbox")).toHaveLength(0);
   });
 
-  it("offers only Undo on a cut rail, and undoing puts it back to be cut", async () => {
+  it("shows a cut rail with only its BMK, length and Cut ✓: a cut is final, nothing to tap", async () => {
     await openCutScreen({});
-    const undo = screen.getByRole("button", { name: "Undo" });
-    expect(undo.getAttribute("title")).toBe("Tapped Done too early");
-    // The only button in the rail list is Undo: no re-cut.
-    expect(within(screen.getByRole("region", { name: "Rails to cut" })).getAllByRole("button")).toHaveLength(1);
-
-    fireEvent.click(undo);
-    await pass(0);
-    expect(server.undos).toBe(1);
-    expect(server.cutAt).toBeNull();
-    expect(doneButton().textContent).toBe("Deburred and marked -U1 · Done");
-  });
-
-  it("dims Undo with a reason when parts are mounted, and sends nothing when it is tapped", async () => {
-    await openCutScreen({ mountedCount: 2 });
-    const undo = screen.getByRole("button", { name: "Undo" });
-    expect(undo.getAttribute("aria-disabled")).toBe("true");
-    expect(undo.getAttribute("aria-describedby")).toBe(screen.getByText("Take the parts off step by step to undo the cut.").id);
-
-    fireEvent.click(undo);
-    await pass(0);
-    expect(server.undos).toBe(0);
-    expect(server.mountedCount).toBe(2);
-    expect(screen.queryByRole("dialog")).toBeNull();
-  });
-
-  it("keeps Undo usable on a cut rail with nothing mounted", async () => {
-    await openCutScreen({});
-    const undo = screen.getByRole("button", { name: "Undo" });
-    expect(undo.getAttribute("aria-disabled")).toBeNull();
-    expect(undo).toHaveProperty("disabled", false);
-    expect(screen.queryByText("Take the parts off step by step to undo the cut.")).toBeNull();
+    const list = screen.getByRole("region", { name: "Rails to cut" });
+    expect(within(list).getByText("-U1")).toBeTruthy();
+    expect(within(list).getByText("306 mm")).toBeTruthy();
+    expect(within(list).getByText("Cut ✓")).toBeTruthy();
+    expect(within(list).queryAllByRole("button")).toHaveLength(0);
+    expect(within(list).queryAllByRole("link")).toHaveLength(0);
   });
 });

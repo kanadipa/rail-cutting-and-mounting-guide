@@ -8,8 +8,6 @@ import type { Cabinet, Part, Rail, RailStatus } from "../api/types";
 export interface FakeServer {
   /** Mount steps the server received, as "from>to". */
   steps: string[];
-  /** How many cut undos the server received. */
-  undos: number;
   mountedCount: number;
   cutAt: string | null;
   /** While set, mount steps get no answer until `release()` is called. */
@@ -49,7 +47,6 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean;
   let waiting: (() => void)[] = [];
   const server: FakeServer = {
     steps: [],
-    undos: 0,
     mountedCount: initial.mountedCount ?? 0,
     cutAt: initial.cut === false ? null : "2026-01-01T08:00:00.000Z",
     hold: false,
@@ -100,14 +97,6 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean;
     if (url === "/api/cabinets/1/rails/5/cut" && method === "PUT") {
       const changed = server.cutAt === null;
       server.cutAt ??= "2026-01-01T08:00:00.000Z";
-      return json(progress(changed));
-    }
-    if (url === "/api/cabinets/1/rails/5/cut" && method === "DELETE") {
-      server.undos += 1;
-      if (server.mountedCount > 0) return error("RESET_REQUIRED", 409, { mountedCount: server.mountedCount });
-      const changed = server.cutAt !== null;
-      server.cutAt = null;
-      server.mountedCount = 0;
       return json(progress(changed));
     }
     if (url === "/api/cabinets/1/rails/5/progress" && method === "PUT") {

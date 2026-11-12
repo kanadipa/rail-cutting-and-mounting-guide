@@ -161,28 +161,6 @@ describe("cutting", () => {
     expect(await eventTypes()).toEqual(["CUT"]);
   });
 
-  it("undoes a cut tapped by mistake", async () => {
-    await api().put(railUrl("/cut"));
-    const response = await api().delete(railUrl("/cut")).expect(200);
-    expect(response.body).toMatchObject({ status: "TO_CUT", cutAt: null, changed: true });
-    expect(await eventTypes()).toEqual(["CUT", "UNCUT"]);
-  });
-
-  it("refuses to undo a cut with parts mounted", async () => {
-    await api().put(railUrl("/cut"));
-    await step(0, 1);
-    await step(1, 2);
-    const response = await api().delete(railUrl("/cut")).expect(409);
-    expect(response.body.error).toMatchObject({ code: "RESET_REQUIRED", details: { mountedCount: 2 } });
-    expect((await api().get(railUrl())).body).toMatchObject({ status: "IN_PROGRESS", mountedCount: 2 });
-  });
-
-  it("undoing a rail that is not cut changes nothing", async () => {
-    const response = await api().delete(railUrl("/cut")).expect(200);
-    expect(response.body.changed).toBe(false);
-    expect(await eventTypes()).toEqual([]);
-  });
-
   it("does not cut a rail through another cabinet", async () => {
     const response = await api().put(`/api/cabinets/${cabinetA}/rails/${railB}/cut`).expect(404);
     expect(response.body.error.code).toBe("RAIL_NOT_FOUND");
@@ -260,8 +238,8 @@ describe("mount progress (compare-and-set)", () => {
   });
 
   it("refuses to mount on a rail that is not cut", async () => {
-    await api().delete(railUrl("/cut"));
-    const response = await step(0, 1).expect(409);
+    // Cabinet B's rail has not been cut.
+    const response = await api().put(`/api/cabinets/${cabinetB}/rails/${railB}/progress`).send({ from: 0, to: 1 }).expect(409);
     expect(response.body.error.code).toBe("RAIL_NOT_CUT");
   });
 

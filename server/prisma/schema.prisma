@@ -131,8 +131,8 @@ enum PlanWarningCode {
 
 enum WorkEventType {
   CUT
+  // UNCUT and RECUT are unused; kept so old history rows stay valid.
   UNCUT
-  // RECUT is unused; kept so old history rows stay valid.
   RECUT
   MOUNT
   UNMOUNT

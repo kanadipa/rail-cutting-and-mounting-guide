@@ -90,13 +90,6 @@
   color: var(--green);
 }
 
-.cardActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
 .work {
   min-width: 0;
   min-height: 0;
@@ -282,13 +275,4 @@
   .heroLength {
     font-size: 60px;
   }
-}
-
-/* Why Undo is dimmed: parts are on the rail. */
-.undoBlocked {
-  flex-basis: 100%;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.3;
-  color: var(--ink-soft);
 }
