@@ -10,7 +10,7 @@ const BACKGROUND = "#e7e2d8";
  * the lib's lights, and no controls of its own: views are fixed unless a screen adds controls. It draws only when something
  * changed, and at most at twice the CSS resolution, to keep a bench tablet cool.
  */
-export function Stage({ children, touchAction = "pan-y" }: { children: ReactNode; touchAction?: "pan-y" | "none" }) {
+export function Stage({ children, touchAction = "pan-y", background = BACKGROUND }: { children: ReactNode; touchAction?: "pan-y" | "none"; background?: string }) {
   return (
     <Canvas
       orthographic
@@ -19,7 +19,7 @@ export function Stage({ children, touchAction = "pan-y" }: { children: ReactNode
       camera={{ position: [0, 0, 1000], near: -100_000, far: 100_000, zoom: 1 }}
       style={{ touchAction }}
     >
-      <color attach="background" args={[BACKGROUND]} />
+      <color attach="background" args={[background]} />
       <Lights />
       {children}
     </Canvas>
