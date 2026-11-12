@@ -100,9 +100,6 @@ CREATE UNIQUE INDEX "articles_manufacturer_article_number_key" ON "articles"("ma
 CREATE UNIQUE INDEX "cabinets_name_key" ON "cabinets"("name");
 
 -- CreateIndex
-CREATE INDEX "rails_cabinet_id_idx" ON "rails"("cabinet_id");
-
--- CreateIndex
 CREATE INDEX "rails_article_id_idx" ON "rails"("article_id");
 
 -- CreateIndex
@@ -110,9 +107,6 @@ CREATE UNIQUE INDEX "rails_cabinet_id_bmk_key" ON "rails"("cabinet_id", "bmk");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "rails_cabinet_id_cut_order_key" ON "rails"("cabinet_id", "cut_order");
-
--- CreateIndex
-CREATE INDEX "placed_items_rail_id_idx" ON "placed_items"("rail_id");
 
 -- CreateIndex
 CREATE INDEX "placed_items_article_id_idx" ON "placed_items"("article_id");
