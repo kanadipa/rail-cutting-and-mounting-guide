@@ -3,3 +3,7 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Working files, not part of the delivery
+FABLE_BRIEF.md
+assembly.html
