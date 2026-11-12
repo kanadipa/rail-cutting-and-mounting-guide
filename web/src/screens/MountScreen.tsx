@@ -76,7 +76,7 @@ export function MountScreen({ rail }: { rail: Rail }) {
     <div className={styles.screen}>
       <div className={styles.body}>
         {/* Keyed by part: every new part starts on its photo. */}
-        <PartCard key={part.id} part={part} railBmk={rail.bmk} railLengthMm={mm(rail.cutLengthMm)} position={mounted + 1} total={total} />
+        <PartCard key={part.id} part={part} railBmk={rail.bmk} railLengthMm={mm(rail.cutLengthMm)} railsHref={paths.rails(cabinet.id)} position={mounted + 1} total={total} />
         <div className={styles.visual}>
           <div className={styles.view}>
             <MountView rail={rail} current={part} wholeRail={wholeRail} free={rotating} zoomStep={zoomStep} onZoomChange={setZoomStep} />

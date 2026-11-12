@@ -249,6 +249,21 @@ describe("mount screen: the 3D view and the part card", () => {
   });
 });
 
+describe("mount screen: switching rails", () => {
+  it("has a link to the Rails page next to the rail, and it leaves without asking", async () => {
+    await openMountScreen({ mountedCount: 1 });
+    const link = screen.getByRole("link", { name: "Switch rail" });
+    expect(link.getAttribute("href")).toBe("/cabinets/1/rails");
+
+    fireEvent.click(link);
+    await pass(0);
+    expect(screen.getByRole("heading", { name: "Choose a rail" })).toBeTruthy();
+    // Nothing was sent: the part was already saved when it was confirmed.
+    expect(server.steps).toEqual([]);
+    expect(server.mountedCount).toBe(1);
+  });
+});
+
 describe("finished rail", () => {
   const DONE_URL = "/cabinets/1/rails/5/done";
 
