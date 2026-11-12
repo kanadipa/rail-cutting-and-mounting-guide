@@ -1,7 +1,8 @@
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import sirv from "sirv";
-import { defineConfig, type Plugin } from "vite";
+import type { Plugin } from "vite";
+import { defineConfig } from "vitest/config";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const apiPort = process.env.API_PORT ?? "3000";
@@ -25,4 +26,5 @@ export default defineConfig({
     fs: { allow: [projectRoot] },
     proxy: { "/api": `http://localhost:${apiPort}` },
   },
+  test: { environment: "jsdom", include: ["src/**/*.test.{ts,tsx}"], restoreMocks: true },
 });
