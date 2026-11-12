@@ -8,6 +8,8 @@ import type { Cabinet, Part, Rail, RailStatus } from "../api/types";
 export interface FakeServer {
   /** Mount steps the server received, as "from>to". */
   steps: string[];
+  /** Cut undos the server received, as "confirmed" or "unconfirmed". */
+  undos: string[];
   mountedCount: number;
   cutAt: string | null;
   /** While set, mount steps get no answer until `release()` is called. */
@@ -21,7 +23,7 @@ export interface FakeServer {
 
 const PART_COUNT = 3;
 
-const part = (seq: number): Part => ({
+const part = (seq: number, clipOn: boolean): Part => ({
   id: 100 + seq,
   bmk: `-X1:${seq}`,
   mountSeq: seq,
@@ -32,16 +34,22 @@ const part = (seq: number): Part => ({
   articleNumber: "2203-7641",
   displayName: "Terminal block",
   glbUrl: "/assets/glb/terminal.glb",
-  imageUrl: null,
-  where: seq === 1 ? { kind: "FIRST", atMm: 10 } : { kind: "NEXT_TO", neighbourBmk: `-X1:${seq - 1}`, atMm: seq * 10 },
+  imageUrl: "/assets/img/terminal.jpg",
+  where:
+    seq === 1
+      ? { kind: "FIRST", atMm: 10 }
+      : clipOn && seq === 2
+        ? { kind: "CLIP_ONTO", onBmk: "-X1:1" }
+        : { kind: "NEXT_TO", neighbourBmk: `-X1:${seq - 1}`, atMm: seq * 10 },
   group: null,
   planWarning: null,
 });
 
-export function startFakeServer(initial: { mountedCount?: number; cut?: boolean } = {}): FakeServer {
+export function startFakeServer(initial: { mountedCount?: number; cut?: boolean; clipOn?: boolean } = {}): FakeServer {
   let waiting: (() => void)[] = [];
   const server: FakeServer = {
     steps: [],
+    undos: [],
     mountedCount: initial.mountedCount ?? 0,
     cutAt: initial.cut === false ? null : "2026-01-01T08:00:00.000Z",
     hold: false,
@@ -70,7 +78,7 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean 
     mountedCount: server.mountedCount,
     partCount: PART_COUNT,
   });
-  const rail = (): Rail => ({ ...summary(), parts: [1, 2, 3].map(part) });
+  const rail = (): Rail => ({ ...summary(), parts: [1, 2, 3].map((seq) => part(seq, initial.clipOn === true)) });
   const cabinet = (): Cabinet => ({
     id: 1,
     name: "Cabinet 1",
@@ -92,6 +100,15 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean 
     if (url === "/api/cabinets/1/rails/5/cut" && method === "PUT") {
       const changed = server.cutAt === null;
       server.cutAt ??= "2026-01-01T08:00:00.000Z";
+      return json(progress(changed));
+    }
+    if (url === "/api/cabinets/1/rails/5/cut" && method === "DELETE") {
+      const { confirmReset } = JSON.parse(String(init?.body ?? "{}")) as { confirmReset?: boolean };
+      server.undos.push(confirmReset ? "confirmed" : "unconfirmed");
+      if (server.mountedCount > 0 && !confirmReset) return error("RESET_REQUIRED", 409, { mountedCount: server.mountedCount });
+      const changed = server.cutAt !== null;
+      server.cutAt = null;
+      server.mountedCount = 0;
       return json(progress(changed));
     }
     if (url === "/api/cabinets/1/rails/5/progress" && method === "PUT") {

@@ -4,7 +4,12 @@ import { type FakeServer, startFakeServer } from "../test/fakeServer";
 import { pass, renderApp } from "../test/renderApp";
 
 // jsdom has no WebGL. The 3D views are checked by eye; these tests are about saving.
-vi.mock("../three/MountView", () => ({ MountView: () => null }));
+vi.mock("../three/MountView", () => ({
+  MountView: ({ zoomStep, wholeRail }: { zoomStep: number; wholeRail: boolean }) => <div data-testid="mount-view" data-zoom={zoomStep} data-whole={String(wholeRail)} />,
+  ZOOM_STEP_MIN: -3,
+  ZOOM_STEP_MAX: 5,
+}));
+vi.mock("../three/PartGlbView", () => ({ PartGlbView: () => <div data-testid="part-3d" /> }));
 vi.mock("../three/BarCutView", () => ({ BarCutView: () => null }));
 
 const MOUNT_URL = "/cabinets/1/rails/5/mount";
@@ -86,12 +91,12 @@ describe("mount screen: saving a step", () => {
 
   it("keeps Back disabled, not hidden, on the first part", async () => {
     await openMountScreen();
-    expect(screen.getByRole("button", { name: "Back" })).toHaveProperty("disabled", true);
+    expect(screen.getByRole("button", { name: /Previous part/ })).toHaveProperty("disabled", true);
   });
 
   it("goes one part back and saves that too", async () => {
     await openMountScreen({ mountedCount: 2 });
-    fireEvent.click(screen.getByRole("button", { name: "Back" }));
+    fireEvent.click(screen.getByRole("button", { name: /Previous part/ }));
     await pass(0);
     expect(server.steps).toEqual(["2>1"]);
     expect(currentPart()).toBe("-X1:2");
@@ -175,5 +180,84 @@ describe("opening the app", () => {
     renderApp("/cabinets/1/rails/99/mount");
     await pass(0);
     expect(screen.getByText("Rail not found.")).toBeTruthy();
+  });
+});
+
+describe("mount screen: the 3D view and the part card", () => {
+  const zoom = () => screen.getByTestId("mount-view").getAttribute("data-zoom");
+
+  it("zooms with the + and − keys, within limits", async () => {
+    await openMountScreen();
+    expect(zoom()).toBe("0");
+    fireEvent.click(screen.getByRole("button", { name: "Zoom in" }));
+    fireEvent.click(screen.getByRole("button", { name: "Zoom in" }));
+    expect(zoom()).toBe("2");
+    fireEvent.click(screen.getByRole("button", { name: "Zoom out" }));
+    expect(zoom()).toBe("1");
+    for (let tap = 0; tap < 10; tap += 1) fireEvent.click(screen.getByRole("button", { name: "Zoom out" }));
+    expect(zoom()).toBe("-3");
+    expect(screen.getByRole("button", { name: "Zoom out" })).toHaveProperty("disabled", true);
+  });
+
+  it("shows the current mode on the two toggles as pressed state", async () => {
+    await openMountScreen();
+    const whole = screen.getByRole("button", { name: "Whole rail" });
+    expect(whole.getAttribute("aria-pressed")).toBe("false");
+    fireEvent.click(whole);
+    expect(whole.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByTestId("mount-view").getAttribute("data-whole")).toBe("true");
+  });
+
+  it("says a part sits directly on the rail", async () => {
+    await openMountScreen();
+    expect(screen.getByText("Directly on the rail")).toBeTruthy();
+    expect(screen.queryByText("Clips onto another part, not onto the rail")).toBeNull();
+  });
+
+  it("says a clip-on part clips onto another part, not onto the rail", async () => {
+    await openMountScreen({ mountedCount: 1, clipOn: true });
+    expect(screen.getByText("Clip onto -X1:1")).toBeTruthy();
+    expect(screen.getByText("Clips onto another part, not onto the rail")).toBeTruthy();
+    expect(screen.queryByText("Directly on the rail")).toBeNull();
+  });
+
+  it("starts on the photo and switches to the part's 3D model and back", async () => {
+    await openMountScreen();
+    expect(screen.getByRole("button", { name: "Photo" }).getAttribute("aria-pressed")).toBe("true");
+    expect(screen.queryByTestId("part-3d")).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: "3D" }));
+    expect(screen.getByTestId("part-3d")).toBeTruthy();
+    expect(screen.getByText("Drag to turn")).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Photo" }));
+    expect(screen.queryByTestId("part-3d")).toBeNull();
+  });
+
+  it("is back on the photo for the next part", async () => {
+    await openMountScreen();
+    fireEvent.click(screen.getByRole("button", { name: "3D" }));
+    fireEvent.click(doneButton());
+    await pass(0);
+    expect(currentPart()).toBe("-X1:2");
+    expect(screen.queryByTestId("part-3d")).toBeNull();
+  });
+});
+
+describe("finished rail", () => {
+  const DONE_URL = "/cabinets/1/rails/5/done";
+
+  it('"Take -X1:3 off again" steps back one part and lands on the mount screen', async () => {
+    server = startFakeServer({ mountedCount: 3 });
+    renderApp(DONE_URL);
+    await pass(0);
+    expect(screen.getByText("3 parts mounted")).toBeTruthy();
+    expect(screen.getByText("Goes back to the last part. Nothing else changes.")).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: "Take -X1:3 off again" }));
+    await pass(0);
+    expect(server.steps).toEqual(["3>2"]);
+    expect(currentPart()).toBe("-X1:3");
+    expect(doneButton().textContent).toContain("Mounted -X1:3");
   });
 });
