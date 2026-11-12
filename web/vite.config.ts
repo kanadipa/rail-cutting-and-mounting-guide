@@ -44,8 +44,6 @@ export default defineConfig({
   plugins: [react(), staticAssets(), announce()],
   server: {
     port: 5173,
-    // If 5173 is taken, stop and say so. The README and the operators' bookmarks use 5173.
-    strictPort: true,
     // The operator app imports the 3D toolkit from ../lib.
     fs: { allow: [projectRoot] },
     proxy: { "/api": `http://localhost:${apiPort}` },

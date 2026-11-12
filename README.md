@@ -23,16 +23,15 @@ npm test                 # all tests (needs the database running)
 npm run test:unit        # no database needed
 ```
 
-- Operator app: **http://localhost:5173** (it opens on the step where the job stands). `npm run dev` prints
-  this address and the API's in one block. If 5173 is busy it stops with "Port 5173 is already in use"
-  instead of choosing another port.
+- Operator app: **http://localhost:5173**, or the next free port (the terminal prints it). It opens on the
+  step where the job stands.
 - API: http://localhost:3000/api (health: `/api/health`).
 - `npm run typecheck` checks all three packages.
 - `npm run seed:reset` imports the job again and **deletes its progress**. `npm run setup` is safe to repeat:
   an imported job and its progress are left alone.
 - `npm run demo` starts the lib's original reference demo (not part of the solution).
-- Ports and the database address are in `.env` (created from `.env.example`). If you change
-  `POSTGRES_PORT`, change it in the two database URLs too.
+- The API port and the database address are in `.env` (created from `.env.example`). If you change
+  `POSTGRES_PORT`, change it in the two database URLs too. The web app uses Vite's port.
 
 ## Layout
 
