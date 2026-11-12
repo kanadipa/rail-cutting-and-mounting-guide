@@ -10,7 +10,7 @@ import type { ProgressView } from "./progress.service";
 export class MutationLogInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<ProgressView>): Observable<ProgressView> {
     const request = context.switchToHttp().getRequest<RequestWithId>();
-    const body = (request.body ?? {}) as { from?: number; to?: number; confirmReset?: boolean };
+    const body = (request.body ?? {}) as { from?: number; to?: number };
     const fields = {
       requestId: request.requestId,
       action: context.getHandler().name,
@@ -18,7 +18,6 @@ export class MutationLogInterceptor implements NestInterceptor {
       railId: Number(request.params.rid),
       from: body.from,
       to: body.to,
-      confirmReset: body.confirmReset,
     };
     return next.handle().pipe(
       tap({

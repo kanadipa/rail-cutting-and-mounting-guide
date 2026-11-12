@@ -78,6 +78,11 @@
 .button:disabled {
   cursor: default;
 }
+/* A button that says "not now" but stays focusable, so its note can be read out. */
+.button[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 /* A button that is saving keeps its colour: it is busy, not unavailable. */
 .button:disabled:not(.busy) {
   opacity: 0.4;

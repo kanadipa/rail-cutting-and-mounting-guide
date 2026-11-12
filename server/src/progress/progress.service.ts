@@ -37,11 +37,14 @@ export class ProgressService {
     });
   }
 
-  /** The operator tapped Done by mistake: the piece is not cut yet. */
-  undoCut(cabinetId: number, railId: number, confirmReset: boolean): Promise<ProgressView> {
+  /**
+   * The operator tapped Done by mistake: the piece is not cut yet. Parts come off step by step, so a
+   * rail with parts mounted is refused here; the screen does not offer it, this is the safety net.
+   */
+  undoCut(cabinetId: number, railId: number): Promise<ProgressView> {
     return this.change(cabinetId, railId, async (tx, rail) => {
       if (rail.cutAt === null) return view(rail, false);
-      if (rail.mountedCount > 0 && !confirmReset) {
+      if (rail.mountedCount > 0) {
         throw new AppError("RESET_REQUIRED", "Parts are mounted on this rail", { mountedCount: rail.mountedCount });
       }
       await this.progress.setProgress(tx, railId, null, 0);

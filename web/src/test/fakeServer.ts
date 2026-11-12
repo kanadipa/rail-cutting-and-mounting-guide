@@ -8,8 +8,8 @@ import type { Cabinet, Part, Rail, RailStatus } from "../api/types";
 export interface FakeServer {
   /** Mount steps the server received, as "from>to". */
   steps: string[];
-  /** Cut undos the server received, as "confirmed" or "unconfirmed". */
-  undos: string[];
+  /** How many cut undos the server received. */
+  undos: number;
   mountedCount: number;
   cutAt: string | null;
   /** While set, mount steps get no answer until `release()` is called. */
@@ -49,7 +49,7 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean;
   let waiting: (() => void)[] = [];
   const server: FakeServer = {
     steps: [],
-    undos: [],
+    undos: 0,
     mountedCount: initial.mountedCount ?? 0,
     cutAt: initial.cut === false ? null : "2026-01-01T08:00:00.000Z",
     hold: false,
@@ -103,9 +103,8 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean;
       return json(progress(changed));
     }
     if (url === "/api/cabinets/1/rails/5/cut" && method === "DELETE") {
-      const { confirmReset } = JSON.parse(String(init?.body ?? "{}")) as { confirmReset?: boolean };
-      server.undos.push(confirmReset ? "confirmed" : "unconfirmed");
-      if (server.mountedCount > 0 && !confirmReset) return error("RESET_REQUIRED", 409, { mountedCount: server.mountedCount });
+      server.undos += 1;
+      if (server.mountedCount > 0) return error("RESET_REQUIRED", 409, { mountedCount: server.mountedCount });
       const changed = server.cutAt !== null;
       server.cutAt = null;
       server.mountedCount = 0;
