@@ -10,8 +10,7 @@
     "db:migrate": "dotenv -e ../.env -- prisma migrate dev",
     "db:seed": "dotenv -e ../.env -- prisma db seed",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "dev:order": "dotenv -e ../.env -- tsx prisma/exportOrder.ts"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
