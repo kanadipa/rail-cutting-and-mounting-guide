@@ -48,7 +48,8 @@ export async function importPlan(prisma: PrismaClient, options: ImportOptions): 
     planned.push({ ...(await computeRailPlan(rail, articles, measurer)), ...cut });
   }
 
-  // One transaction, and a fixed number of statements however big the plan is.
+  // One transaction. Writes are batched in chunks, so the number of statements grows with the plan,
+  // but far slower than one per row.
   const cabinetId = await prisma.$transaction(
     async (tx) => {
       const articleIds = await upsertArticles(tx, catalog);

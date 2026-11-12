@@ -35,7 +35,7 @@ constraints keep impossible states out, e.g. parts mounted on an uncut rail. `op
 Progress updates are compare-and-set (`{from: 12, to: 13}`): a retry is a no-op and a stale screen gets a
 409 instead of moving progress backwards. Events are only written when state changes.
 Scale: queries are scoped to one cabinet and one rail, all indexed. A rail holds a few hundred parts at
-most, so loading one stays bounded. The import batches its writes (a fixed number of statements, one
+most, so loading one stays bounded. The import batches its writes (in chunks, one
 transaction) and measures each article's model once. The heavy traffic is the 3D files: static, cacheable.
 
 ## Not built, on purpose
