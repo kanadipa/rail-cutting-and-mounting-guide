@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import type { Part } from "../api/types";
 import { useI18n } from "../i18n/I18nProvider";
 import { PartGlbView } from "../three/PartGlbView";
@@ -6,7 +7,22 @@ import styles from "./Mount.module.css";
 import { clipTargetBmk, whereLine } from "./whereLine";
 
 /** The part to take now: what it is called, what it looks like and where it goes. */
-export function PartCard({ part, railBmk, railLengthMm, position, total }: { part: Part; railBmk: string; railLengthMm: string; position: number; total: number }) {
+export function PartCard({
+  part,
+  railBmk,
+  railLengthMm,
+  railsHref,
+  position,
+  total,
+}: {
+  part: Part;
+  railBmk: string;
+  railLengthMm: string;
+  /** The Rails page. Progress is saved at every step, so leaving needs no confirmation. */
+  railsHref: string;
+  position: number;
+  total: number;
+}) {
   const { t, mm } = useI18n();
   const where = whereLine(part.where, t, mm);
   // A part that clips onto another part gets its own colour: the rail is not where it goes.
@@ -22,6 +38,9 @@ export function PartCard({ part, railBmk, railLengthMm, position, total }: { par
         </span>
         <span className={styles.partProgress}>{t.mount.partOf(position, total)}</span>
       </div>
+      <Link to={railsHref} className={styles.switchRail} draggable={false}>
+        {t.mount.switchRail}
+      </Link>
       {part.group && <span className={styles.take}>{t.mount.take(part.group.size, part.group.index)}</span>}
       <h1 className={`bmk ${styles.partBmk}`}>{part.bmk}</h1>
       <p className={styles.name}>{part.displayName}</p>

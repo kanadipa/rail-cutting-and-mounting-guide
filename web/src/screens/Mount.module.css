@@ -35,6 +35,7 @@
 }
 
 .railChip {
+  white-space: nowrap;
   padding: 4px 10px;
   border-radius: 6px;
   background: var(--navy-soft);
@@ -44,7 +45,29 @@
   font-weight: 900;
 }
 
+/* A quiet way to another rail, up here and away from Done and Take off. */
+.switchRail {
+  align-self: flex-start;
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--bezel);
+  border-radius: 6px;
+  background: #dbd8cf;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.switchRail:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+
 .partProgress {
+  white-space: nowrap;
   font-family: var(--mono);
   font-size: 13px;
   font-weight: 700;
