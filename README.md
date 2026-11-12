@@ -45,6 +45,11 @@ data/ assets/ docs/ tests/   as delivered
 
 `/assets` (3D models and pictures) is served by the Vite dev server; there is no production build yet.
 
+## Beyond the brief
+
+The solution goes past the two required steps in a few places. [DECISIONS.md](DECISIONS.md#beyond-the-brief)
+lists each one and why it is there.
+
 ## When something goes wrong
 
 - **The screen only shows what the server confirmed.** Done disables at the tap and the next part appears
