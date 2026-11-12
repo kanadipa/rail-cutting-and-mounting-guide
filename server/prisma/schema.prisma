@@ -51,6 +51,8 @@ model Rail {
   barIndex    Int    @map("bar_index")
   /// Where on that bar the piece starts.
   barOffsetMm Float  @map("bar_offset_mm")
+  /// How many parts the rail has, set at import. Saves counting placed_items on every progress write.
+  partCount   Int    @map("part_count")
 
   cabinet     Cabinet       @relation(fields: [cabinetId], references: [id], onDelete: Cascade)
   article     Article       @relation(fields: [articleId], references: [id])
@@ -67,41 +69,44 @@ model Rail {
 
 /// A component on a rail, with the mounting order and measurements computed at import.
 model PlacedItem {
-  id             Int    @id @default(autoincrement())
-  railId         Int    @map("rail_id")
-  bmk            String
-  articleId      Int    @map("article_id")
+  id                Int              @id @default(autoincrement())
+  railId            Int              @map("rail_id")
+  bmk               String
+  articleId         Int              @map("article_id")
   /// The 3D pose from the plan: { positionMm: [x, y, z], quaternion: [x, y, z, w] }.
-  pose           Json
+  pose              Json
   /// Mounting order on its rail, 1..n.
-  mountSeq       Int    @map("mount_seq")
+  mountSeq          Int              @map("mount_seq")
   /// Left and right edge of the part's bounding box along the rail.
-  xStartMm       Float  @map("x_start_mm")
-  xEndMm         Float  @map("x_end_mm")
+  xStartMm          Float            @map("x_start_mm")
+  xEndMm            Float            @map("x_end_mm")
   /// Nearest point to the mounting plate; decides which of two stacked parts goes on first.
-  zMinMm         Float  @map("z_min_mm")
+  zMinMm            Float            @map("z_min_mm")
   /// Empty rail to leave before this part.
-  gapBeforeMm    Float  @map("gap_before_mm")
+  gapBeforeMm       Float            @map("gap_before_mm")
   /// The part this one clips onto, when it does not sit on the rail itself.
-  mountsOnItemId Int?   @map("mounts_on_item_id")
+  mountsOnItemId    Int?             @map("mounts_on_item_id")
   /// Marker carriers only: the mount steps of the first and last part it labels.
-  labelsFirstSeq Int?   @map("labels_first_seq")
-  labelsLastSeq  Int?   @map("labels_last_seq")
+  labelsFirstSeq    Int?             @map("labels_first_seq")
+  labelsLastSeq     Int?             @map("labels_last_seq")
   /// Set at import when the plan cannot be built as drawn. Shown on the step; never blocks it.
-  planWarning    PlanWarningCode? @map("plan_warning")
-  /// OVERLAPS_PART: the BMK of the part it shares the rail with.
-  planWarningBmk String? @map("plan_warning_bmk")
+  planWarning       PlanWarningCode? @map("plan_warning")
+  /// OVERLAPS_PART: the part it shares the rail with.
+  planWarningItemId Int?             @map("plan_warning_item_id")
 
-  rail       Rail         @relation(fields: [railId], references: [id], onDelete: Cascade)
-  article    Article      @relation(fields: [articleId], references: [id])
-  mountsOn   PlacedItem?  @relation("MountsOn", fields: [mountsOnItemId], references: [id], onDelete: SetNull)
-  carries    PlacedItem[] @relation("MountsOn")
-  workEvents WorkEvent[]
+  rail            Rail         @relation(fields: [railId], references: [id], onDelete: Cascade)
+  article         Article      @relation(fields: [articleId], references: [id])
+  mountsOn        PlacedItem?  @relation("MountsOn", fields: [mountsOnItemId], references: [id], onDelete: SetNull)
+  carries         PlacedItem[] @relation("MountsOn")
+  planWarningItem PlacedItem?  @relation("PlanWarningWith", fields: [planWarningItemId], references: [id], onDelete: SetNull)
+  warnedBy        PlacedItem[] @relation("PlanWarningWith")
+  workEvents      WorkEvent[]
 
   @@unique([railId, bmk])
   @@unique([railId, mountSeq])
   @@index([railId])
   @@index([articleId])
+  @@index([planWarningItemId])
   @@map("placed_items")
 }
 
@@ -149,5 +154,6 @@ model WorkEvent {
 
   @@index([cabinetId, at])
   @@index([railId])
+  @@index([placedItemId])
   @@map("work_events")
 }

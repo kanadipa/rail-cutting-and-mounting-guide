@@ -6,6 +6,8 @@ import request from "supertest";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { AppModule } from "../src/app.module";
 import { configureApp } from "../src/configureApp";
+import { importPlan } from "../prisma/import/importPlan";
+import { PROJECT_ROOT, realCatalog, realRails } from "./realPlan";
 
 /**
  * The API against a real database. Two small cabinets are written directly, so the tests do not
@@ -42,6 +44,7 @@ async function createCabinet(name: string, railBmk: string): Promise<{ cabinetId
       cutOrder: 1,
       barIndex: 0,
       barOffsetMm: 0,
+      partCount: 3,
       progress: { create: {} },
       placedItems: {
         create: [1, 2, 3].map((seq) => ({
@@ -289,5 +292,60 @@ describe("database constraints", () => {
       prisma.railProgress.update({ where: { railId: railA }, data: { cutAt: new Date(), mountedCount: -1 } }),
     ).rejects.toThrow();
     await expect(prisma.rail.update({ where: { id: railA }, data: { cutLengthMm: 0 } })).rejects.toThrow();
+  });
+
+  it("refuse a negative part count", async () => {
+    await expect(prisma.rail.update({ where: { id: railA }, data: { partCount: -1 } })).rejects.toThrow();
+  });
+});
+
+describe("replaying an import with reset", () => {
+  const REPLAY = "API replay cabinet";
+  const runImport = () =>
+    importPlan(prisma, { cabinetName: REPLAY, rails: realRails(), catalog: realCatalog(), projectRoot: PROJECT_ROOT, reset: true });
+
+  /** What an operator sees: each rail's part count and its parts in mount order, with where they clip. */
+  async function snapshot(cabinetId: number) {
+    const cabinet = (await api().get(`/api/cabinets/${cabinetId}`).expect(200)).body;
+    const rails = [];
+    for (const summary of cabinet.rails) {
+      const rail = (await api().get(`/api/cabinets/${cabinetId}/rails/${summary.id}`).expect(200)).body;
+      rails.push({
+        bmk: rail.bmk,
+        partCount: rail.partCount,
+        order: rail.parts.map((part: { bmk: string; where: unknown; planWarning: unknown }) => [part.bmk, part.where, part.planWarning]),
+      });
+    }
+    return { rails: cabinet.rails.map((rail: { bmk: string; partCount: number; cutOrder: number }) => [rail.bmk, rail.partCount, rail.cutOrder]), detail: rails };
+  }
+
+  afterAll(async () => {
+    await prisma.workEvent.deleteMany({ where: { cabinet: { name: REPLAY } } });
+    await prisma.cabinet.deleteMany({ where: { name: REPLAY } });
+  });
+
+  it("gives the same mount order and part counts, and the count matches the parts stored", async () => {
+    const first = await runImport();
+    const before = await snapshot(first.cabinetId);
+
+    const second = await runImport();
+    const after = await snapshot(second.cabinetId);
+
+    expect(after).toEqual(before);
+    const expected = Object.fromEntries(realRails().map((rail) => [rail.bmk, rail.placedItems.length]));
+    expect(Object.fromEntries(after.rails.map(([bmk, count]: [string, number]) => [bmk, count]))).toEqual(expected);
+    for (const rail of await prisma.rail.findMany({ where: { cabinetId: second.cabinetId }, include: { _count: { select: { placedItems: true } } } })) {
+      expect(rail.partCount).toBe(rail._count.placedItems);
+    }
+  });
+
+  it("points a plan warning at the part itself", async () => {
+    const { cabinetId } = await runImport();
+    const warned = await prisma.placedItem.findMany({
+      where: { rail: { cabinetId }, planWarning: "OVERLAPS_PART" },
+      include: { planWarningItem: true },
+    });
+    for (const part of warned) expect(part.planWarningItem?.railId).toBe(part.railId);
+    expect(warned.length).toBeGreaterThan(0);
   });
 });

@@ -12,13 +12,32 @@ import type { Box } from "../../src/domain/box";
  */
 export class PartMeasurer {
   private readonly models = new Map<string, Promise<THREE.Object3D>>();
+  /** A part's box with its origin at 0, per article and orientation: every copy reuses it. */
+  private readonly boxes = new Map<string, Promise<Box>>();
 
   /** `projectRoot` is the folder the catalog's `glb` paths are relative to. */
   constructor(private readonly projectRoot: string) {}
 
   async boxAt(glbPath: string, pose: Pose): Promise<Box> {
+    // A pose is a turn about the model's origin, then a move. So the box of a given article and
+    // orientation is measured once at the origin, and each copy only shifts it by its position.
+    const key = `${glbPath}|${pose.quaternion.join(",")}`;
+    let pending = this.boxes.get(key);
+    if (!pending) {
+      pending = this.measureAtOrigin(glbPath, pose.quaternion);
+      this.boxes.set(key, pending);
+    }
+    const box = await pending;
+    const [dx, dy, dz] = pose.positionMm;
+    return {
+      min: { x: box.min.x + dx, y: box.min.y + dy, z: box.min.z + dz },
+      max: { x: box.max.x + dx, y: box.max.y + dy, z: box.max.z + dz },
+    };
+  }
+
+  private async measureAtOrigin(glbPath: string, quaternion: Pose["quaternion"]): Promise<Box> {
     const model = (await this.load(glbPath)).clone(true);
-    placeComponent(model, pose);
+    placeComponent(model, { positionMm: [0, 0, 0], quaternion });
     model.updateMatrixWorld(true);
     // Precise: from the vertices, so a rotated part is not measured by its rotated box.
     const box = new THREE.Box3().setFromObject(model, true);

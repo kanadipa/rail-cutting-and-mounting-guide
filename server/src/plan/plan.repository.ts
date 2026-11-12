@@ -14,12 +14,12 @@ export class PlanRepository {
     return this.prisma.cabinet.findUnique({ where: { id: cabinetId }, select: { id: true, name: true } });
   }
 
-  /** The cabinet's rails with part counts; the parts themselves are loaded per rail. */
+  /** The cabinet's rails (each knows its part count); the parts themselves are loaded per rail. */
   findRails(cabinetId: number) {
     return this.prisma.rail.findMany({
       where: { cabinetId },
       orderBy: { cutOrder: "asc" },
-      include: { article: true, progress: true, _count: { select: { placedItems: true } } },
+      include: { article: true, progress: true },
     });
   }
 
@@ -31,7 +31,7 @@ export class PlanRepository {
         progress: true,
         placedItems: {
           orderBy: { mountSeq: "asc" },
-          include: { article: true, mountsOn: { select: { bmk: true } } },
+          include: { article: true, mountsOn: { select: { bmk: true } }, planWarningItem: { select: { bmk: true } } },
         },
       },
     });
