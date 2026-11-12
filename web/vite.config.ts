@@ -18,32 +18,10 @@ const staticAssets = (): Plugin => ({
   },
 });
 
-/**
- * Says plainly where to open the app. Under `npm run dev` this line sits between the API's log
- * lines, so it names both addresses in one block instead of Vite's single "Local:" line.
- */
-const announce = (): Plugin => ({
-  name: "rail-guide-announce",
-  configureServer(server) {
-    server.printUrls = () => {
-      const app = server.resolvedUrls?.local[0] ?? `http://localhost:${server.config.server.port}/`;
-      const bold = (text: string) => `\x1b[1m\x1b[32m${text}\x1b[0m`;
-      console.log(
-        [
-          "",
-          `  ${bold("Operator app:")}  ${bold(app.replace(/\/$/, ""))}   <- open this`,
-          `  API:           http://localhost:${apiPort}/api`,
-          "",
-        ].join("\n"),
-      );
-    };
-  },
-});
-
 export default defineConfig({
-  plugins: [react(), staticAssets(), announce()],
+  plugins: [react(), staticAssets()],
   server: {
-    port: 5173,
+    port: Number(process.env.WEB_PORT ?? 5173),
     // The operator app imports the 3D toolkit from ../lib.
     fs: { allow: [projectRoot] },
     proxy: { "/api": `http://localhost:${apiPort}` },
