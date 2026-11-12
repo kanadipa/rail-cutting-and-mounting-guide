@@ -7,7 +7,8 @@
     "node": ">=20.11"
   },
   "scripts": {
-    "setup": "npm install && node scripts/ensure-env.mjs && npm run db:wait -w server && npm run db:generate -w server && npm run db:deploy -w server",
+    "setup": "npm install && node scripts/ensure-env.mjs && npm run db:wait -w server && npm run db:generate -w server && npm run db:deploy -w server && npm run db:seed -w server",
+    "seed:reset": "npm run db:seed -w server -- -- --reset",
     "demo": "vite",
     "test": "vitest run && npm test -w server",
     "typecheck": "tsc -p tsconfig.json && npm run typecheck -w server"
