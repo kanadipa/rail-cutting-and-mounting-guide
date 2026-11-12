@@ -37,7 +37,7 @@
 }
 
 .key:focus-visible {
-  outline: 3px solid var(--orange);
+  outline: 3px solid var(--vermilion);
   outline-offset: 1px;
 }
 

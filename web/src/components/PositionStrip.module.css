@@ -58,8 +58,8 @@
 .current {
   height: 52px;
   padding: 0 16px;
-  border-color: var(--orange);
-  background: var(--orange);
+  border-color: var(--vermilion);
+  background: var(--vermilion);
   color: #fff;
   font-size: 22px;
 }
