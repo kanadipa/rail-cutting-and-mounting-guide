@@ -19,7 +19,7 @@ part of its BMK group. A pure function, tested on real data. The lib is unchange
 - **3D rotates only where a part's direction matters.** A rail profile looks the same along its length, so
   the cut view is fixed, with a whole-bar view.
 - **Shop words:** "64 mm from left end", and an amber "Leave 50 mm free" at a gap.
-- **Mark the cut piece.** -U1 and -U2 differ by 13 mm, so a reminder asks to write the BMK on it.
+- **Mark the cut piece.** -U1 and -U2 differ by 13 mm, so the Done button says it: "Deburred and marked -U1".
 - **Only what is saved is shown.** No optimistic updates. A banner keeps the last saved step if the network
   drops.
 
@@ -36,7 +36,8 @@ stale screen gets a 409. The import is one transaction, batched in chunks.
 ## Not built, on purpose
 - Skipping a part: parts sit flush, so it can't go in later.
 - **Undoing a confirmed cut.** The piece is already cut and off the bar. The risk is a mis-tap before
-  cutting. I accepted it: the reminder and the 600 ms tap lock sit before that button. Fix it with `npm run seed:reset`.
+  cutting. I accepted it: the button wording and the 600 ms tap lock guard that tap. A wrong cut is fixed with
+  `npm run seed:reset`.
 - Scan confirmation, offline mode, login, a planner dashboard.
 
 ## Assumptions, and what changes if they are wrong

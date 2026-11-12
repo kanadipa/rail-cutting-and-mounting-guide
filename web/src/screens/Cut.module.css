@@ -184,55 +184,6 @@
   background: #c9c6bd;
 }
 
-/* The calm post-cut reminder from the design: plain text, nothing to tap. */
-.dock {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 18px;
-  border: 1.5px solid #d2cfc6;
-  border-radius: 10px;
-  background: var(--card);
-}
-
-.dockLabel {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--ink-soft);
-}
-
-.steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.steps li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.stepNumber {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border: 1.5px solid var(--bezel-shadow);
-  border-radius: 50%;
-  background: var(--chassis);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 900;
-}
-
 .summary {
   display: flex;
   flex-direction: column;

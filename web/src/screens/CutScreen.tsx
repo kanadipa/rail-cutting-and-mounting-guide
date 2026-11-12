@@ -95,20 +95,6 @@ export function CutScreen() {
             </ViewKeys>
             {bar && <Legend barNumber={bar.barIndex + 1} barLength={mm(bar.barLengthMm)} />}
           </div>
-          {/* A reminder, not a checklist: nothing here is tapped. */}
-          <div className={styles.dock} role="note">
-            <span className={styles.dockLabel}>{t.cut.before}</span>
-            <ol className={styles.steps}>
-              <li>
-                <span className={styles.stepNumber}>1</span>
-                {t.cut.stepDeburr}
-              </li>
-              <li>
-                <span className={styles.stepNumber}>2</span>
-                {t.cut.stepMark(current.bmk)}
-              </li>
-            </ol>
-          </div>
           {cut.failed && <p className={styles.problem}>{t.save.failed}</p>}
           <SaveButton tone="confirm" primary pending={cut.pending} retrying={cut.retrying} isLocked={isLocked} onTap={() => cut.save(current.id)}>
             {t.cut.done(current.bmk)}
