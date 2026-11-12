@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, ParseIntPipe, Put, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Param, ParseIntPipe, Put, UseInterceptors } from "@nestjs/common";
 import { MutationLogInterceptor } from "./mutationLog.interceptor";
 import { StepDto } from "./progress.dto";
 import { ProgressService } from "./progress.service";
@@ -11,11 +11,6 @@ export class ProgressController {
   @Put("cut")
   markCut(@Param("cid", ParseIntPipe) cabinetId: number, @Param("rid", ParseIntPipe) railId: number) {
     return this.progress.markCut(cabinetId, railId);
-  }
-
-  @Delete("cut")
-  undoCut(@Param("cid", ParseIntPipe) cabinetId: number, @Param("rid", ParseIntPipe) railId: number) {
-    return this.progress.undoCut(cabinetId, railId);
   }
 
   @Put("progress")

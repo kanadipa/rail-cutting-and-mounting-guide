@@ -24,17 +24,10 @@ export function CutScreen() {
 
   const cut = useSave({ cabinetId: cabinet.id, lastSaved, save: (railId: number) => api.markCut(cabinet.id, railId) });
 
-  // Undo is for a Done tapped by mistake, so it is only sent while nothing is mounted on the rail.
-  const reverse = useSave({
-    cabinetId: cabinet.id,
-    lastSaved,
-    save: (rail: RailSummary) => api.undoCut(cabinet.id, rail.id),
-  });
-
   const barOf = (railId: number | undefined) =>
     cabinet.bars.find((candidate) => candidate.pieces.some((piece) => piece.railId === railId)) ?? cabinet.bars[0];
   const bar = barOf(current?.id);
-  const saving = cut.pending || reverse.pending;
+  const saving = cut.pending;
 
   return (
     <div className={styles.screen}>
@@ -53,25 +46,6 @@ export function CutScreen() {
                 <span className={styles.cardState}>{isCut ? t.cut.cut : isCurrent ? t.cut.current : t.cut.toCut}</span>
               </div>
               <span className={styles.cardLength}>{mm(rail.cutLengthMm)}</span>
-              {isCut && (
-                <div className={styles.cardActions}>
-                  {rail.mountedCount > 0 ? (
-                    <>
-                      {/* Parts are on the rail: it comes apart step by step, not with one tap. */}
-                      <Button tone="quiet" aria-disabled="true" aria-describedby={`undo-blocked-${rail.id}`} onClick={() => undefined}>
-                        {t.cut.undo}
-                      </Button>
-                      <p id={`undo-blocked-${rail.id}`} className={styles.undoBlocked}>
-                        {t.cut.undoBlocked}
-                      </p>
-                    </>
-                  ) : (
-                    <Button tone="quiet" disabled={saving} title={t.cut.undoHint} onClick={() => reverse.save(rail)}>
-                      {t.cut.undo}
-                    </Button>
-                  )}
-                </div>
-              )}
             </article>
           );
         })}
@@ -114,7 +88,7 @@ export function CutScreen() {
             </ol>
           </div>
           {cut.failed && <p className={styles.problem}>{t.save.failed}</p>}
-          <SaveButton tone="confirm" primary pending={cut.pending} retrying={cut.retrying} disabled={reverse.pending} isLocked={isLocked} onTap={() => cut.save(current.id)}>
+          <SaveButton tone="confirm" primary pending={cut.pending} retrying={cut.retrying} isLocked={isLocked} onTap={() => cut.save(current.id)}>
             {t.cut.done(current.bmk)}
           </SaveButton>
         </section>
