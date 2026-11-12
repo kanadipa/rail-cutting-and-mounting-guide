@@ -9,7 +9,7 @@
   "scripts": {
     "setup": "npm install && node scripts/ensure-env.mjs && npm run db:wait -w server && npm run db:generate -w server && npm run db:deploy -w server",
     "demo": "vite",
-    "test": "vitest run",
+    "test": "vitest run && npm test -w server",
     "typecheck": "tsc -p tsconfig.json && npm run typecheck -w server"
   },
   "dependencies": {
