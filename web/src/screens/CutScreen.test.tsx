@@ -45,14 +45,11 @@ describe("cut screen", () => {
     expect(screen.getByRole("button", { name: /Start mounting/ })).toBeTruthy();
   });
 
-  it("shows the deburr and mark steps as a reminder with nothing to tap", async () => {
+  it("puts the deburr-and-mark reminder in the Done button, with no extra panel", async () => {
     await openCutScreen({ cut: false });
-    const reminder = screen.getByRole("note");
-    expect(within(reminder).getByText("Before you put it in the tray:")).toBeTruthy();
-    expect(within(reminder).getByText("Deburr both ends")).toBeTruthy();
-    expect(within(reminder).getByText("Write -U1 on the piece")).toBeTruthy();
-    expect(within(reminder).queryAllByRole("button")).toHaveLength(0);
-    expect(within(reminder).queryAllByRole("checkbox")).toHaveLength(0);
+    expect(doneButton().textContent).toBe("Deburred and marked -U1 · Done");
+    expect(screen.queryByRole("note")).toBeNull();
+    expect(screen.queryByText("Before you put it in the tray:")).toBeNull();
   });
 
   it("shows a cut rail with only its BMK, length and Cut ✓: a cut is final, nothing to tap", async () => {
