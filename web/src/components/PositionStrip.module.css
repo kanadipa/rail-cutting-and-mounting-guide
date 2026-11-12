@@ -1,0 +1,87 @@
+.strip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 64px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 2px solid var(--line);
+  overflow: hidden;
+}
+
+.ticks {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  /* The named parts keep their size; the ticks share what is left and are cut off at the far ends. */
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.ticksBefore {
+  justify-content: flex-end;
+}
+
+.tick {
+  flex: none;
+  width: 4px;
+  height: 26px;
+  border-radius: 2px;
+  border: 1px solid var(--ink-soft);
+}
+
+.tickDone {
+  background: var(--ink-soft);
+}
+
+.cell {
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 44px;
+  padding: 0 10px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: var(--text-body);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.done {
+  background: var(--ink-soft);
+  color: #fff;
+}
+
+.current {
+  height: 52px;
+  padding: 0 16px;
+  border-color: var(--orange);
+  background: var(--orange);
+  color: #fff;
+  font-size: 22px;
+}
+
+.gap {
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 44px;
+  padding: 0 12px;
+  border: 2px dashed var(--amber);
+  border-radius: 8px;
+  background: var(--amber-bg);
+  color: var(--amber-ink);
+  font-size: var(--text-body);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.gapTick {
+  flex: none;
+  width: 18px;
+  height: 26px;
+  border-bottom: 2px dashed var(--amber);
+}
