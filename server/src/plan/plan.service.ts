@@ -16,7 +16,7 @@ export class PlanService {
     const rails = await this.plan.findRails(cabinetId);
     return {
       ...cabinet,
-      rails: rails.map((rail) => toRailSummary(rail, rail._count.placedItems)),
+      rails: rails.map((rail) => toRailSummary(rail)),
       bars: toBars(rails),
     };
   }

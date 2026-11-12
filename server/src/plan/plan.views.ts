@@ -64,7 +64,8 @@ export interface RailView extends RailSummary {
 
 const assetUrl = (path: string): string => `/${path}`;
 
-export function toRailSummary(rail: RailRow | RailWithParts, partCount: number): RailSummary {
+export function toRailSummary(rail: RailRow | RailWithParts): RailSummary {
+  const partCount = rail.partCount;
   const cutAt = rail.progress?.cutAt ?? null;
   const mountedCount = rail.progress?.mountedCount ?? 0;
   return {
@@ -124,7 +125,7 @@ export function toRailView(rail: RailWithParts): RailView {
   const groups = groupRuns(steps);
 
   return {
-    ...toRailSummary(rail, items.length),
+    ...toRailSummary(rail),
     parts: items.map((item, index) => ({
       id: item.id,
       bmk: item.bmk,
@@ -139,7 +140,7 @@ export function toRailView(rail: RailWithParts): RailView {
       imageUrl: item.article.imagePath ? assetUrl(item.article.imagePath) : null,
       where: hints[index],
       group: groups[index],
-      planWarning: item.planWarning ? { code: item.planWarning, otherBmk: item.planWarningBmk } : null,
+      planWarning: item.planWarning ? { code: item.planWarning, otherBmk: item.planWarningItem?.bmk ?? null } : null,
     })),
   };
 }

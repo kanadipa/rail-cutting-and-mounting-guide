@@ -17,15 +17,14 @@ export class ProgressRepository {
    * the same rail take turns. Returns null when the rail is not in this cabinet.
    */
   async lockRail(tx: Prisma.TransactionClient, cabinetId: number, railId: number): Promise<LockedRail | null> {
-    const rows = await tx.$queryRaw<{ cut_at: Date | null; mounted_count: number }[]>`
-      SELECT p.cut_at, p.mounted_count
+    const rows = await tx.$queryRaw<{ cut_at: Date | null; mounted_count: number; part_count: number }[]>`
+      SELECT p.cut_at, p.mounted_count, r.part_count
       FROM rail_progress p
       JOIN rails r ON r.id = p.rail_id
       WHERE p.rail_id = ${railId} AND r.cabinet_id = ${cabinetId}
       FOR UPDATE OF p`;
     if (rows.length === 0) return null;
-    const partCount = await tx.placedItem.count({ where: { railId } });
-    return { cabinetId, railId, cutAt: rows[0].cut_at, mountedCount: rows[0].mounted_count, partCount };
+    return { cabinetId, railId, cutAt: rows[0].cut_at, mountedCount: rows[0].mounted_count, partCount: rows[0].part_count };
   }
 
   cabinetExists(tx: Prisma.TransactionClient, cabinetId: number): Promise<boolean> {
