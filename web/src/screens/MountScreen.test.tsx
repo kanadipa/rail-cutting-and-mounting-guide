@@ -89,14 +89,19 @@ describe("mount screen: saving a step", () => {
     expect(currentPart()).toBe("-X1:3");
   });
 
+  it("names the part the back button takes off", async () => {
+    await openMountScreen({ mountedCount: 2 });
+    expect(screen.getByRole("button", { name: "← Take off -X1:2" })).toHaveProperty("disabled", false);
+  });
+
   it("keeps Back disabled, not hidden, on the first part", async () => {
     await openMountScreen();
-    expect(screen.getByRole("button", { name: /Previous part/ })).toHaveProperty("disabled", true);
+    expect(screen.getByRole("button", { name: /Take off/ })).toHaveProperty("disabled", true);
   });
 
   it("goes one part back and saves that too", async () => {
     await openMountScreen({ mountedCount: 2 });
-    fireEvent.click(screen.getByRole("button", { name: /Previous part/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Take off/ }));
     await pass(0);
     expect(server.steps).toEqual(["2>1"]);
     expect(currentPart()).toBe("-X1:2");
