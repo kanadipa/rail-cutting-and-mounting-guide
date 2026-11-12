@@ -12,6 +12,7 @@
     "seed:reset": "npm run db:seed -w server -- -- --reset",
     "demo": "vite",
     "test": "vitest run && npm test -w server && npm test -w web",
+    "test:unit": "vitest run && npm run test:unit -w server && npm test -w web",
     "typecheck": "tsc -p tsconfig.json && npm run typecheck -w server && npm run typecheck -w web"
   },
   "dependencies": {

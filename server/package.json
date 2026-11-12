@@ -10,6 +10,7 @@
     "db:migrate": "dotenv -e ../.env -- prisma migrate dev",
     "db:seed": "dotenv -e ../.env -- prisma db seed",
     "test": "vitest run",
+    "test:unit": "vitest run -c vitest.unit.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "prisma": {
