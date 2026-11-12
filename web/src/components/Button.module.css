@@ -1,4 +1,3 @@
-/* Buttons follow assembly.html: pill shapes, 64 px main action, 48 px everything else. */
 .button {
   display: inline-flex;
   align-items: center;
