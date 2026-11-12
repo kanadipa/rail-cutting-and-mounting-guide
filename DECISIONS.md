@@ -10,10 +10,21 @@ of its BMK group (`-XE` is the final step of -U2) and clips onto the part under 
 on the real data. A bad plan fails at a desk, not at the bench.
 
 ## UX
-- **One action per screen, sized by the bench design** (`assembly.html`): 64 px main action, 44–78 px BMK
+- **One action per screen, sized for the bench:** 64 px main action, 44–78 px BMK
   and cut length, 15 px body. Done is the big pill; the way back is a smaller warm-grey button beside it,
   "Take off -XD1:4/1", and the only way back. Green confirms work, navy moves you somewhere, vermilion is
   the thing to do now, teal a part that clips onto another part.
+- **Fixed cut order.** The cut screen always shows the next rail in the bar plan, and the operator can't
+  pick another. The pieces lie along the bar in that order, so each cut is measured from the bar's end and
+  the remnant stays one piece. Cutting out of order breaks the planned offsets.
+- **The header counts parts, not rails.** A rail counts nothing until its last part is on, so "0 of 2
+  rails" hides real progress. "31 of 71 parts" shows it.
+- **Choosing a rail.** Any cut rail can be opened; uncut rails are locked. "Next" marks the rail in
+  progress, else the first cut rail waiting, in cut order. It is a suggestion, not a queue. Opening the app
+  lands on the rail in progress, and a finished rail offers the next one directly, so the page is mostly
+  for switching rails.
+- **3D rotates only where a part's direction matters** (mounting). A rail profile looks the same along its
+  whole length, so the cut view stays fixed and only adds a whole-bar view.
 - **"Where" in shop words:** "Next to -XD1:4/1 · 64 mm from left end", "Clip onto -2K1/2", and an amber
   "Leave 50 mm free, then at 230 mm" at a gap, the likeliest mistake on -U2.
 - **Mark the cut piece.** -U1 and -U2 differ by 13 mm. The cut step asks to deburr and write the BMK on the
@@ -26,7 +37,9 @@ on the real data. A bad plan fails at a desk, not at the bench.
 - EN/DE, because the operators are in Germany.
 
 ## Data model
-PostgreSQL (Docker), NestJS, Prisma. `articles` (the catalog), `cabinets` → `rails` → `placed_items` (with
+PostgreSQL (Docker). NestJS + Prisma: a layered API (controller → service → repository) with typed
+queries and real migrations, so adding benches, operators or a planner view means adding a module, not
+reworking what exists. `articles` (the catalog), `cabinets` → `rails` → `placed_items` (with
 the computed `mount_seq`, x-range, gap and the part it clips onto), `rail_progress` (one row per rail: cut or
 not, how many parts mounted) and `work_events` (append-only history). `rails.part_count` is set at import.
 Status is derived, never stored. BMKs are unique per cabinet, not globally. CHECK constraints keep
