@@ -43,7 +43,7 @@ const part = (seq: number, clipOn: boolean): Part => ({
   planWarning: null,
 });
 
-export function startFakeServer(initial: { mountedCount?: number; cut?: boolean; clipOn?: boolean } = {}): FakeServer {
+export function startFakeServer(initial: { mountedCount?: number; cut?: boolean; clipOn?: boolean; secondBar?: boolean } = {}): FakeServer {
   let waiting: (() => void)[] = [];
   const server: FakeServer = {
     steps: [],
@@ -79,9 +79,16 @@ export function startFakeServer(initial: { mountedCount?: number; cut?: boolean;
   const cabinet = (): Cabinet => ({
     id: 1,
     name: "Cabinet 1",
-    rails: [summary()],
-    bars: [{ articleId: 1, barIndex: 0, barLengthMm: 2000, usedMm: 306, remnantMm: 1694, pieces: [{ railId: 5, bmk: "-U1", offsetMm: 0, lengthMm: 306 }] }],
+    rails: initial.secondBar ? [summary(), otherArticleRail()] : [summary()],
+    bars: [
+      { articleId: 1, barIndex: 0, barLengthMm: 2000, glbUrl: "/assets/glb/rail.glb", usedMm: 306, remnantMm: 1694, pieces: [{ railId: 5, bmk: "-U1", offsetMm: 0, lengthMm: 306 }] },
+      ...(initial.secondBar
+        ? [{ articleId: 2, barIndex: 0, barLengthMm: 2000, glbUrl: "/assets/glb/rail-b.glb", usedMm: 293, remnantMm: 1707, pieces: [{ railId: 6, bmk: "-U2", offsetMm: 0, lengthMm: 293 }] }]
+        : []),
+    ],
   });
+  /** A second rail, cut from another article: its bar has its own model. */
+  const otherArticleRail = () => ({ ...summary(), id: 6, bmk: "-U2", cutLengthMm: 293, cutOrder: 2, glbUrl: "/assets/glb/rail-b.glb", mountedCount: 0, status: "READY" as RailStatus });
   const progress = (changed: boolean) => ({ railId: 5, status: status(), cutAt: server.cutAt, mountedCount: server.mountedCount, partCount: PART_COUNT, changed });
   const json = (body: unknown, httpStatus = 200) => new Response(JSON.stringify(body), { status: httpStatus });
   const error = (code: string, httpStatus: number, details = {}) => json({ error: { code, message: "server wording, never shown", details } }, httpStatus);

@@ -29,6 +29,8 @@ export interface BarView {
   articleId: number;
   barIndex: number;
   barLengthMm: number;
+  /** The 3D model of the raw bar: the article all its pieces are cut from. */
+  glbUrl: string;
   usedMm: number;
   remnantMm: number;
   pieces: { railId: number; bmk: string; offsetMm: number; lengthMm: number }[];
@@ -94,6 +96,7 @@ export function toBars(rails: RailRow[]): BarView[] {
       articleId: rail.articleId,
       barIndex: rail.barIndex,
       barLengthMm: rail.article.barLengthMm ?? rail.cutLengthMm,
+      glbUrl: assetUrl(rail.article.glbPath),
       usedMm: 0,
       remnantMm: 0,
       pieces: [],

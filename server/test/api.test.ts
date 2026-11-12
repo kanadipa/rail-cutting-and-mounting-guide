@@ -106,7 +106,7 @@ describe("plan", () => {
       id: cabinetA,
       name: NAMES[0],
       rails: [{ id: railA, bmk: "-U1", cutLengthMm: 300, cutOrder: 1, status: "TO_CUT", mountedCount: 0, partCount: 3 }],
-      bars: [{ barIndex: 0, barLengthMm: 2000, usedMm: 300, remnantMm: 1700, pieces: [{ railId: railA, bmk: "-U1", offsetMm: 0, lengthMm: 300 }] }],
+      bars: [{ barIndex: 0, barLengthMm: 2000, glbUrl: "/assets/glb/x.glb", usedMm: 300, remnantMm: 1700, pieces: [{ railId: railA, bmk: "-U1", offsetMm: 0, lengthMm: 300 }] }],
     });
   });
 
