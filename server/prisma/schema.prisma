@@ -62,7 +62,6 @@ model Rail {
 
   @@unique([cabinetId, bmk])
   @@unique([cabinetId, cutOrder])
-  @@index([cabinetId])
   @@index([articleId])
   @@map("rails")
 }
@@ -104,7 +103,6 @@ model PlacedItem {
 
   @@unique([railId, bmk])
   @@unique([railId, mountSeq])
-  @@index([railId])
   @@index([articleId])
   @@index([planWarningItemId])
   @@map("placed_items")
