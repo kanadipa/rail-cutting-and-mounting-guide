@@ -61,20 +61,37 @@ describe("mountOrder on the real rails", () => {
     expect(offRail.map((s) => s.bmk)).toEqual(["-XE"]);
   });
 
-  it("-U2: the marker carrier -XE comes right after the last part it spans", () => {
+  it("-U2: the marker carrier -XE goes on last, after every -XE: part it labels", () => {
+    const steps = stepsOf.get("-U2")!;
     const carrier = step("-U2", "-XE");
-    expect(carrier.labelsFirstSeq).not.toBeNull();
-    expect(carrier.mountSeq).toBe(carrier.labelsLastSeq! + 1);
-    const spanned = stepsOf.get("-U2")!.filter(
-      (s) => s.bmk !== "-XE" && Math.min(s.xEndMm, carrier.xEndMm) - Math.max(s.xStartMm, carrier.xStartMm) > 0.5,
-    );
-    expect(spanned.length).toBeGreaterThan(0);
-    for (const part of spanned) expect(part.mountSeq, part.bmk).toBeLessThan(carrier.mountSeq);
+    const labelled = steps.filter((s) => s.bmk.startsWith("-XE:"));
+    expect(labelled).toHaveLength(11);
+    for (const part of labelled) expect(part.mountSeq, part.bmk).toBeLessThan(carrier.mountSeq);
+    expect(carrier.mountSeq).toBe(46);
+    expect([carrier.labelsFirstSeq, carrier.labelsLastSeq]).toEqual([step("-U2", "-XE:1/2").mountSeq, step("-U2", "-XE:7/3").mountSeq]);
+  });
+
+  it("-U2: the marker carrier physically clips onto the end bracket under it", () => {
+    expect(step("-U2", "-XE").mountsOnBmk).toBe("-XE:1/2");
   });
 
   it("-U2: finds the one stretch of empty rail, before -XE:1/2", () => {
     const gaps = stepsOf.get("-U2")!.filter((s) => s.mountSeq > 1 && s.gapBeforeMm > 2);
     expect(gaps.map((s) => s.bmk)).toEqual(["-XE:1/2"]);
     expect(gaps[0].gapBeforeMm).toBeCloseTo(49.65, 1);
+  });
+
+  it("-U1: flags the server module and the base unit drawn on the same stretch of rail", () => {
+    expect(step("-U1", "-1K1/2").planWarning).toEqual({ code: "OVERLAPS_PART", otherBmk: "-1K2/2" });
+    expect(step("-U1", "-1K2/2").planWarning).toEqual({ code: "OVERLAPS_PART", otherBmk: "-1K1/2" });
+  });
+
+  it("-U1: flags the last base unit, which reaches past the end of the rail", () => {
+    expect(step("-U1", "-6K1/2").planWarning).toEqual({ code: "PAST_RAIL_END", otherBmk: null });
+  });
+
+  it("flags nothing else on either rail", () => {
+    const flagged = [...stepsOf.values()].flat().filter((s) => s.planWarning !== null);
+    expect(flagged.map((s) => s.bmk).sort()).toEqual(["-1K1/2", "-1K2/2", "-6K1/2"]);
   });
 });

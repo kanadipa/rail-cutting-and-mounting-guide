@@ -1395,29 +1395,6 @@
    },
    {
     "mountSeq": 36,
-    "bmk": "-XE",
-    "category": "marker_carrier",
-    "displayName": "Mounting for labeling material",
-    "xStartMm": 229.3,
-    "gapBeforeMm": 0,
-    "mountsOn": null,
-    "glb": "/assets/glb/Wago.249-119.glb",
-    "pose": {
-     "positionMm": [
-      239.3,
-      0,
-      22.95
-     ],
-     "quaternion": [
-      0.5,
-      -0.5,
-      -0.5,
-      0.5
-     ]
-    }
-   },
-   {
-    "mountSeq": 37,
     "bmk": "-XE:1/1",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1440,7 +1417,7 @@
     }
    },
    {
-    "mountSeq": 38,
+    "mountSeq": 37,
     "bmk": "-XE:2/2",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1463,7 +1440,7 @@
     }
    },
    {
-    "mountSeq": 39,
+    "mountSeq": 38,
     "bmk": "-XE:2/1",
     "category": "end_cover",
     "displayName": "End and partition plate for terminal block",
@@ -1486,7 +1463,7 @@
     }
    },
    {
-    "mountSeq": 40,
+    "mountSeq": 39,
     "bmk": "-XE:3",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1509,7 +1486,7 @@
     }
    },
    {
-    "mountSeq": 41,
+    "mountSeq": 40,
     "bmk": "-XE:4",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1532,7 +1509,7 @@
     }
    },
    {
-    "mountSeq": 42,
+    "mountSeq": 41,
     "bmk": "-XE:5",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1555,7 +1532,7 @@
     }
    },
    {
-    "mountSeq": 43,
+    "mountSeq": 42,
     "bmk": "-XE:6",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1578,7 +1555,7 @@
     }
    },
    {
-    "mountSeq": 44,
+    "mountSeq": 43,
     "bmk": "-XE:7/2",
     "category": "terminal",
     "displayName": "Ground terminal block",
@@ -1601,7 +1578,7 @@
     }
    },
    {
-    "mountSeq": 45,
+    "mountSeq": 44,
     "bmk": "-XE:7/1",
     "category": "end_cover",
     "displayName": "End and partition plate for terminal block",
@@ -1624,7 +1601,7 @@
     }
    },
    {
-    "mountSeq": 46,
+    "mountSeq": 45,
     "bmk": "-XE:7/3",
     "category": "end_bracket",
     "displayName": "End bracket for terminal block",
@@ -1642,6 +1619,29 @@
       0.5,
       0.5,
       0.5,
+      0.5
+     ]
+    }
+   },
+   {
+    "mountSeq": 46,
+    "bmk": "-XE",
+    "category": "marker_carrier",
+    "displayName": "Mounting for labeling material",
+    "xStartMm": 229.3,
+    "gapBeforeMm": 0,
+    "mountsOn": "-XE:1/2",
+    "glb": "/assets/glb/Wago.249-119.glb",
+    "pose": {
+     "positionMm": [
+      239.3,
+      0,
+      22.95
+     ],
+     "quaternion": [
+      0.5,
+      -0.5,
+      -0.5,
       0.5
      ]
     }

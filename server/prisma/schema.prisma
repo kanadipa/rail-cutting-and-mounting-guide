@@ -84,9 +84,13 @@ model PlacedItem {
   gapBeforeMm    Float  @map("gap_before_mm")
   /// The part this one clips onto, when it does not sit on the rail itself.
   mountsOnItemId Int?   @map("mounts_on_item_id")
-  /// Marker carriers only: the mount steps of the first and last part it sits on.
+  /// Marker carriers only: the mount steps of the first and last part it labels.
   labelsFirstSeq Int?   @map("labels_first_seq")
   labelsLastSeq  Int?   @map("labels_last_seq")
+  /// Set at import when the plan cannot be built as drawn. Shown on the step; never blocks it.
+  planWarning    PlanWarningCode? @map("plan_warning")
+  /// OVERLAPS_PART: the BMK of the part it shares the rail with.
+  planWarningBmk String? @map("plan_warning_bmk")
 
   rail       Rail         @relation(fields: [railId], references: [id], onDelete: Cascade)
   article    Article      @relation(fields: [articleId], references: [id])
@@ -113,6 +117,11 @@ model RailProgress {
   rail Rail @relation(fields: [railId], references: [id], onDelete: Cascade)
 
   @@map("rail_progress")
+}
+
+enum PlanWarningCode {
+  OVERLAPS_PART
+  PAST_RAIL_END
 }
 
 enum WorkEventType {

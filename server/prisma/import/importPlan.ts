@@ -140,6 +140,8 @@ async function writeRail(
         gapBeforeMm: step.gapBeforeMm,
         labelsFirstSeq: step.labelsFirstSeq,
         labelsLastSeq: step.labelsLastSeq,
+        planWarning: step.planWarning?.code ?? null,
+        planWarningBmk: step.planWarning?.otherBmk ?? null,
       };
     }),
   });

@@ -24,9 +24,9 @@ export interface MountStep {
   xStartMm: number;
   xEndMm: number;
   zMinMm: number;
-  /** The part this one clips onto; null when it sits on the rail itself (or is a marker carrier). */
+  /** The part this one clips onto; null when it sits on the rail itself. */
   mountsOnBmk: string | null;
-  /** Marker carriers only: the mount steps of the first and last part it sits on. */
+  /** Marker carriers only: the mount steps of the first and last part it labels. */
   labelsFirstSeq: number | null;
   labelsLastSeq: number | null;
 }
@@ -49,7 +49,8 @@ interface Part {
  * - Parts on the rail go left to right by their left edge.
  * - A part that shares a stretch of rail with a part nearer the rail clips onto that part and
  *   comes right after it.
- * - A marker carrier comes right after the last part it sits on.
+ * - A marker carrier labels the parts of its BMK group (`-XE` labels every `-XE:…`) and goes on
+ *   after the last of them, although it physically clips onto only the part under it.
  */
 export function mountOrder(items: MountInput[]): MountStep[] {
   const parts = items.map(toPart);
@@ -73,9 +74,12 @@ export function mountOrder(items: MountInput[]): MountStep[] {
 
   const labelledBy = new Map<Part, Part[]>();
   for (const carrier of carriers) {
-    const labelled = ordered.filter((part) => !isCarrier(part) && overlapMm(part, carrier) > CARRIER_MIN_OVERLAP_MM);
+    const under = ordered.filter((part) => !isCarrier(part) && overlapMm(part, carrier) > CARRIER_MIN_OVERLAP_MM);
+    const inGroup = ordered.filter((part) => !isCarrier(part) && part.bmk.startsWith(`${carrier.bmk}:`));
+    const labelled = inGroup.length > 0 ? inGroup : under;
     labelledBy.set(carrier, labelled);
-    ordered.splice(carrierIndex(ordered, carrier, labelled), 0, carrier);
+    supportOf.set(carrier, [...under].sort((a, b) => overlapMm(b, carrier) - overlapMm(a, carrier))[0] ?? null);
+    ordered.splice(carrierIndex(ordered, carrier, [...labelled, ...under]), 0, carrier);
   }
 
   const seqOf = new Map<Part, number>(ordered.map((part, index) => [part, index + 1]));
@@ -131,9 +135,12 @@ function findSupport(part: Part, others: Part[]): Part | null {
     .sort((a, b) => overlapMm(b, part) - overlapMm(a, part) || leftToRight(a, b))[0];
 }
 
-/** Right after the last part the carrier sits on; a carrier over empty rail goes by its left edge. */
-function carrierIndex(ordered: Part[], carrier: Part, labelled: Part[]): number {
-  if (labelled.length > 0) return Math.max(...labelled.map((part) => ordered.indexOf(part))) + 1;
+/**
+ * Right after the last part the carrier labels or sits on; a carrier over empty rail that labels
+ * nothing goes by its left edge.
+ */
+function carrierIndex(ordered: Part[], carrier: Part, before: Part[]): number {
+  if (before.length > 0) return Math.max(...before.map((part) => ordered.indexOf(part))) + 1;
   const next = ordered.findIndex((part) => part.xStart > carrier.xStart);
   return next === -1 ? ordered.length : next;
 }
