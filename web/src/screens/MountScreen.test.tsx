@@ -252,9 +252,9 @@ describe("mount screen: the 3D view and the part card", () => {
 describe("mount screen: switching rails", () => {
   it("has a Rails key in the corner of the 3D view that goes to the Rails page without asking", async () => {
     await openMountScreen({ mountedCount: 1 });
-    const key = screen.getByRole("link", { name: "Switch rail" });
+    const key = screen.getByRole("link", { name: "Rails" });
     expect(key.textContent).toBe("Rails");
-    expect(within(screen.getByRole("toolbar")).getByRole("link", { name: "Switch rail" })).toBe(key);
+    expect(within(screen.getByRole("toolbar")).getByRole("link", { name: "Rails" })).toBe(key);
     expect(key.getAttribute("href")).toBe("/cabinets/1/rails");
 
     fireEvent.click(key);
@@ -269,7 +269,7 @@ describe("mount screen: switching rails", () => {
     await openMountScreen();
     server.hold = true;
     fireEvent.click(doneButton());
-    const key = screen.getByRole("link", { name: "Switch rail" });
+    const key = screen.getByRole("link", { name: "Rails" });
     expect(key.getAttribute("aria-disabled")).toBe("true");
 
     fireEvent.click(key);
