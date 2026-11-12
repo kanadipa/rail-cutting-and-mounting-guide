@@ -64,7 +64,7 @@ export function CutScreen() {
           <div className={styles.view}>
             {bar && (
               <BarCutView
-                glbUrl={current.glbUrl}
+                glbUrl={bar.glbUrl}
                 bar={bar}
                 currentRailId={current.id}
                 cutRailIds={cutIds}
@@ -96,13 +96,19 @@ export function CutScreen() {
         <section className={styles.work}>
           <div className={styles.summary}>
             <h1 className={styles.summaryTitle}>{t.cut.allCut}</h1>
-            {bar && <p className={styles.summaryRemnant}>{t.cut.allCutRemnant(mm(bar.remnantMm))}</p>}
-          </div>
-          <div className={styles.view}>
-            {bar && rails[0] && (
-              <BarCutView glbUrl={rails[0].glbUrl} bar={bar} currentRailId={null} cutRailIds={cutIds} labels={{ cutAt: (at) => t.cut.cutAt(mm(at)), mm }} />
+            {cabinet.bars.length === 1 && <p className={styles.summaryRemnant}>{t.cut.allCutRemnant(mm(cabinet.bars[0].remnantMm))}</p>}
+            {cabinet.bars.length > 1 && (
+              <p className={styles.summaryRemnant}>
+                {cabinet.bars.map((each) => `${t.cut.fromBar(each.barIndex + 1)}: ${t.cut.allCutRemnant(mm(each.remnantMm))}`).join(" · ")}
+              </p>
             )}
           </div>
+          {/* Every bar, each drawn with the model of its own article. */}
+          {cabinet.bars.map((each) => (
+            <div key={`${each.articleId}/${each.barIndex}`} className={styles.view}>
+              <BarCutView glbUrl={each.glbUrl} bar={each} currentRailId={null} cutRailIds={cutIds} labels={{ cutAt: (at) => t.cut.cutAt(mm(at)), mm }} />
+            </div>
+          ))}
           <Button tone="go" primary disabled={saving} onClick={() => !isLocked() && navigate(paths.rails(cabinet.id))}>
             {t.cut.startMounting} →
           </Button>

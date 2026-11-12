@@ -4,7 +4,9 @@ import { type FakeServer, startFakeServer } from "../test/fakeServer";
 import { pass, renderApp } from "../test/renderApp";
 
 // jsdom has no WebGL: the 3D bar is checked by eye.
-vi.mock("../three/BarCutView", () => ({ BarCutView: () => null }));
+vi.mock("../three/BarCutView", () => ({
+  BarCutView: ({ glbUrl, bar }: { glbUrl: string; bar: { articleId: number } }) => <div data-testid="bar-view" data-glb={glbUrl} data-article={bar.articleId} />,
+}));
 vi.mock("../three/MountView", () => ({ MountView: () => null, ZOOM_STEP_MIN: -3, ZOOM_STEP_MAX: 5 }));
 
 const CUT_URL = "/cabinets/1/cut";
@@ -59,5 +61,15 @@ describe("cut screen", () => {
     expect(within(list).getByText("Cut ✓")).toBeTruthy();
     expect(within(list).queryAllByRole("button")).toHaveLength(0);
     expect(within(list).queryAllByRole("link")).toHaveLength(0);
+  });
+
+  it("draws each bar of the summary with the model of its own article", async () => {
+    await openCutScreen({ secondBar: true });
+    expect(screen.getByText("All rails cut")).toBeTruthy();
+    const views = screen.getAllByTestId("bar-view");
+    expect(views.map((view) => [view.getAttribute("data-article"), view.getAttribute("data-glb")])).toEqual([
+      ["1", "/assets/glb/rail.glb"],
+      ["2", "/assets/glb/rail-b.glb"],
+    ]);
   });
 });

@@ -29,6 +29,8 @@ export interface Bar {
   articleId: number;
   barIndex: number;
   barLengthMm: number;
+  /** The 3D model of the raw bar: the article its pieces are cut from. */
+  glbUrl: string;
   usedMm: number;
   remnantMm: number;
   pieces: { railId: number; bmk: string; offsetMm: number; lengthMm: number }[];
