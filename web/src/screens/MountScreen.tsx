@@ -98,7 +98,7 @@ export function MountScreen({ rail }: { rail: Rail }) {
       </p>
       <div className={styles.footer}>
         <Button tone="secondary" disabled={mounted === 0 || step.pending} onClick={() => step.save({ from: mounted, to: mounted - 1 })}>
-          {t.mount.back}
+          {mounted === 0 ? t.mount.backNone : t.mount.back(rail.parts[mounted - 1].bmk)}
         </Button>
         <SaveButton
           tone="confirm"
