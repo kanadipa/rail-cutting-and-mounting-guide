@@ -82,7 +82,7 @@ function BarModel({ glbUrl, bar, currentRailId, cutRailIds, wholeBar = false, la
   const previous = current ? bar.pieces.find((piece) => piece.offsetMm + piece.lengthMm === current.offsetMm) : undefined;
   const cutStart = current && current.offsetMm > 0 && previous && !cutRailIds.has(previous.railId) ? current.offsetMm : null;
 
-  // The framing window: from the bar's start (or the piece before) to a bit past the saw line.
+  // The framing window: around the piece to cut, or the whole bar.
   const aroundPiece = current !== null && !wholeBar;
   const windowFrom = (aroundPiece ? Math.max(0, current.offsetMm - 120) : 0) - BEFORE_MM;
   const windowTo = aroundPiece && cutEnd !== null ? Math.min(bar.barLengthMm, cutEnd + AFTER_CUT_MM) + BEFORE_MM : bar.barLengthMm + BEFORE_MM;

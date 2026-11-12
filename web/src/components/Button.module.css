@@ -47,7 +47,7 @@
   background: var(--navy-pressed);
 }
 
-/* The design's "Previous part": warm grey, clearly second to the main action. */
+/* Warm grey, clearly second to the main action. */
 .secondary {
   background: #dbd8cf;
   border-color: var(--bezel);
@@ -58,7 +58,7 @@
   background: #cbc8bd;
 }
 
-/* The design's small quiet button: for rare, low-stakes actions such as taking the last part off. */
+/* Small and quiet: for rare actions such as taking the last part off. */
 .quiet {
   min-height: 42px;
   padding: 0 14px;

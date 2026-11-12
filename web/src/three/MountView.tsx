@@ -19,7 +19,7 @@ const NAVY = "#0c3866";
 export const ZOOM_STEP_FACTOR = 1.25;
 export const ZOOM_STEP_MIN = -3;
 export const ZOOM_STEP_MAX = 5;
-/** The dimension line runs below the rail, clear of the parts. */
+/** Height of the dimension line, in mm from the rail's centre. */
 const DIMENSION_Y_MM = -38;
 /** How many of the coming parts have their models fetched ahead of time. */
 const PRELOAD_AHEAD = 3;
@@ -45,8 +45,8 @@ interface MountViewProps {
 /**
  * The rail as it should look after this step: the parts already mounted, plus the current part
  * highlighted. Parts still to come are not shown, so the highlighted one is always the last on.
- * Front view, as the operator faces the rail. It stays fixed, so a hand brushing the screen
- * changes nothing, until rotation is turned on; turning it off returns to the front view.
+ * Front view, as the operator faces the rail. Turning is off until switched on, so a brush of
+ * the hand moves nothing; switching it off returns to the front view. Pinch and wheel zoom always work.
  */
 export function MountView({ rail, current, wholeRail, free, zoomStep, onZoomChange }: MountViewProps) {
   const mounted = rail.parts.slice(0, current ? current.mountSeq - 1 : rail.parts.length);

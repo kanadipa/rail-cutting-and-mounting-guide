@@ -170,7 +170,7 @@
   pointer-events: none;
 }
 
-/* "hero-location-banner": navy = on the rail, teal = clips onto another part, amber = leave space. */
+/* Navy: on the rail. Teal: clips onto another part. Amber: leave space. */
 .banner {
   display: flex;
   flex-direction: column;
