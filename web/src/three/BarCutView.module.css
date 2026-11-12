@@ -13,9 +13,9 @@
 }
 
 .now {
-  border: 2px solid var(--orange);
+  border: 2px solid var(--vermilion);
   background: #fff;
-  color: var(--orange);
+  color: var(--vermilion);
   font-size: 14px;
   font-weight: 900;
 }
@@ -30,7 +30,7 @@
   display: inline-block;
   padding: 5px 12px;
   border-radius: 20px;
-  background: var(--orange);
+  background: var(--vermilion);
   color: #fff;
   font-family: var(--mono);
   font-size: 13px;
