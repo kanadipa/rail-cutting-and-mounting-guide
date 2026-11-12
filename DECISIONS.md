@@ -12,12 +12,14 @@ it. The rule is a pure function with tests on the real data. Computing it at imp
 fails at a desk, not at the bench.
 
 ## UX
-- **One action per screen, readable from a metre away.** Huge BMK and length, one large Done button
-  bottom right. Back is smaller and further away. Green confirms work, navy moves you somewhere.
+- **One action per screen, sized by the bench design.** `assembly.html` sets the sizes: 64 px main action,
+  44–78 px BMK and cut length, 15 px body text. Done is the big pill, Back a smaller warm-grey one beside it.
+  Green confirms work, navy moves you somewhere, vermilion marks the thing to do now, teal a part that clips onto another part.
 - **"Where" in shop words:** "Next to -XD1:4/1 · 64 mm from left end", "Clip onto -2K1/2", and an amber
   "Leave 50 mm free, then at 230 mm" where the plan has a gap. On -U2 that gap is the most likely place for a mistake.
 - **Mark the cut piece.** -U1 and -U2 differ by 13 mm. The cut step asks to deburr and write the BMK
-  on the piece, confirmed with the same tap as "Done".
+  on the piece, shown as a reminder note ("Before you put it in the tray") above the same tap as "Done".
+  Nothing in it is tappable, so it cannot be ticked off without doing the work.
 - **Identical parts:** "Take 10 · this is 1 of 10" saves trips to the shelf. Each part is still confirmed.
 - **Double taps:** the button is disabled while saving and the next step ignores taps for 600 ms.
   Otherwise the second tap lands on the next part.
@@ -62,5 +64,5 @@ problems, barcode confirmation, kerf and remnant reuse once I know Vetaion's num
 None. The screens use `lib/core` and `useGlb` with their own fixed-view canvas; rotation is a toggle.
 
 ## AI tools
-Claude for requirements, system design and reviewing the design. Gemini for brainstorming requirements
-and UI mockups. Fable for implementation, working from a written brief. <!-- adjust -->
+Claude for requirements, system design and reviewing the design. G0ogle Studio for brainstorming requirements
+and UI mockups. Claude Code for implementation and testing. 

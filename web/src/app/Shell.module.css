@@ -9,79 +9,107 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 10px 24px;
-  border-bottom: 2px solid var(--line);
-  background: var(--card);
+  height: 72px;
+  flex: none;
+  padding: 0 24px;
+  border-bottom: 2px solid var(--bezel);
+  background: var(--chassis);
 }
 
 .cabinet {
-  font-size: 22px;
-  font-weight: 700;
   margin-right: auto;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
   white-space: nowrap;
 }
 
 .tabs {
   display: flex;
-  gap: var(--gap);
+  gap: 12px;
 }
 
+/* Raised bench keys; the active one is pressed in. */
 .tab {
   display: inline-flex;
   align-items: center;
-  min-height: var(--target);
-  padding: 0 28px;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  color: var(--ink);
-  font-size: 22px;
-  font-weight: 650;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 24px;
+  border: 2px solid;
+  border-color: var(--bezel-light) var(--bezel-shadow) var(--bezel-shadow) var(--bezel-light);
+  background: #dad7ce;
+  color: var(--ink-soft);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 0.12);
+  font-size: 14px;
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
 }
 
+.tabCount {
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: rgb(0 0 0 / 0.08);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
 .tabActive {
-  border-color: var(--navy);
-  background: var(--navy);
-  color: #fff;
+  background: var(--bg);
+  color: var(--ink);
+  border-color: var(--bezel-shadow) var(--bezel-light) var(--bezel-light) var(--bezel-shadow);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.12);
 }
 
 .tabDisabled {
-  color: var(--ink-soft);
-  background: var(--sunken);
+  opacity: 0.4;
 }
 
 .language {
   display: flex;
-  border: 2px solid var(--line);
-  border-radius: 999px;
-  overflow: hidden;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--bezel);
+  border-radius: 8px;
+  background: rgb(245 244 239 / 0.95);
 }
 
 .languageOption {
-  min-width: var(--target);
-  min-height: var(--target);
-  border: 0;
+  min-width: 44px;
+  height: 36px;
+  border: 1px solid transparent;
+  border-radius: 6px;
   background: transparent;
-  font-weight: 650;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
   cursor: pointer;
 }
 
 .languageOption[aria-pressed="true"] {
-  background: var(--ink);
-  color: #fff;
+  background: #fff;
+  border-color: var(--navy);
+  color: var(--navy);
 }
 
 .banner {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 24px;
+  padding: 12px 24px;
   border-bottom: 3px solid var(--amber);
   background: var(--amber-bg);
   color: var(--amber-ink);
-  font-size: 24px;
-  font-weight: 650;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .bannerMark {
@@ -98,6 +126,11 @@
 
 .main {
   flex: 1;
+  margin: 10px 16px 14px;
+  border: 2px solid var(--bezel);
+  border-radius: 8px;
+  background: var(--bg);
+  overflow: hidden;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -115,7 +148,7 @@
 }
 
 .messageText {
-  font-size: 44px;
+  font-size: 32px;
   font-weight: 700;
   line-height: 1.2;
   max-width: 22ch;

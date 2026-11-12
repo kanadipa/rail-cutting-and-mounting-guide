@@ -1,32 +1,44 @@
 :root {
-  --bg: #f1eee8;
+  /* Tokens from assembly.html ("calm industrial bench"). */
+  --chassis: #e8e5dd;
+  --bezel: #b8b5aa;
+  --bezel-light: #ffffff;
+  --bezel-shadow: #858277;
+  --bg: #f5f4ef;
   --card: #ffffff;
-  --sunken: #e7e2d8;
-  --ink: #1b1d1f;
-  --ink-soft: #45484b;
-  --line: #cfc9bc;
-  /* Green confirms work done. Navy goes somewhere. Orange is the current thing. Amber warns. */
-  --green: #2e6b3a;
-  --green-pressed: #24552e;
-  --navy: #1c3664;
-  --navy-pressed: #152a4e;
-  --orange: #c8471f;
+  --sunken: #ece9e1;
+  --ink: #181a1e;
+  --ink-soft: #5f6470;
+  --ink-dim: #9ea2ab;
+  --line: #b8b5aa;
+  /* Green confirms work done. Navy goes somewhere. Vermilion is the current thing / the cut.
+     Teal means "clips onto another part". Amber warns. */
+  --green: #0d6832;
+  --green-pressed: #084d24;
+  --green-soft: #edf6f0;
+  --green-border: #9dcfb0;
+  --navy: #0c3866;
+  --navy-pressed: #08284a;
+  --navy-soft: #ebf2fa;
+  --orange: #d83b01;
+  --teal: #0f6e78;
+  --teal-soft: #e6f3f4;
   --amber: #b7791f;
   --amber-bg: #fff4dc;
   --amber-ink: #4f3200;
 
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "Chivo Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --text-body: 18px;
-  --text-line: 30px;
-  --text-bmk: 72px;
-  --text-hero: 104px;
+  --text-body: 15px;
+  --text-line: 18px;
+  --text-bmk: 46px;
+  --text-hero: 78px;
 
-  --gap: 16px;
-  --radius: 14px;
-  --target: 60px;
-  --primary-height: 96px;
+  --gap: 12px;
+  --radius: 10px;
+  --target: 48px;
+  --primary-height: 64px;
 }
 
 * {
@@ -41,7 +53,7 @@ body,
 }
 
 body {
-  background: var(--bg);
+  background: var(--chassis);
   color: var(--ink);
   font-family: var(--sans);
   font-size: var(--text-body);
@@ -55,6 +67,7 @@ body {
 
 h1,
 h2,
+h3,
 p {
   margin: 0;
 }
