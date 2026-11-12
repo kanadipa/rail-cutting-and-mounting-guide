@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, screen } from "@testing-library/react";
+import { cleanup, fireEvent, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { type FakeServer, startFakeServer } from "../test/fakeServer";
 import { pass, renderApp } from "../test/renderApp";
@@ -250,17 +250,36 @@ describe("mount screen: the 3D view and the part card", () => {
 });
 
 describe("mount screen: switching rails", () => {
-  it("has a link to the Rails page next to the rail, and it leaves without asking", async () => {
+  it("has a Rails key in the corner of the 3D view that goes to the Rails page without asking", async () => {
     await openMountScreen({ mountedCount: 1 });
-    const link = screen.getByRole("link", { name: "Switch rail" });
-    expect(link.getAttribute("href")).toBe("/cabinets/1/rails");
+    const key = screen.getByRole("link", { name: "Switch rail" });
+    expect(key.textContent).toBe("Rails");
+    expect(within(screen.getByRole("toolbar")).getByRole("link", { name: "Switch rail" })).toBe(key);
+    expect(key.getAttribute("href")).toBe("/cabinets/1/rails");
 
-    fireEvent.click(link);
+    fireEvent.click(key);
     await pass(0);
     expect(screen.getByRole("heading", { name: "Choose a rail" })).toBeTruthy();
     // Nothing was sent: the part was already saved when it was confirmed.
     expect(server.steps).toEqual([]);
     expect(server.mountedCount).toBe(1);
+  });
+
+  it("stays on the screen while a save is on its way", async () => {
+    await openMountScreen();
+    server.hold = true;
+    fireEvent.click(doneButton());
+    const key = screen.getByRole("link", { name: "Switch rail" });
+    expect(key.getAttribute("aria-disabled")).toBe("true");
+
+    fireEvent.click(key);
+    await pass(100);
+    expect(screen.queryByRole("heading", { name: "Choose a rail" })).toBeNull();
+    expect(currentPart()).toBe("-X1:1");
+
+    server.release();
+    await pass(0);
+    expect(currentPart()).toBe("-X1:2");
   });
 });
 

@@ -48,6 +48,7 @@ export const en = {
     partOf: (n: number, total: number) => `Part ${n} of ${total}`,
     viewTools: "View controls",
     switchRail: "Switch rail",
+    rails: "Rails",
     wholeRail: "Whole rail",
     first: (at: string) => `First part · ${at} from left end`,
     nextTo: (bmk: string, at: string) => `Next to ${bmk} · ${at} from left end`,

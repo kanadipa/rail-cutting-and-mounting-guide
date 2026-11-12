@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import type { Part } from "../api/types";
 import { useI18n } from "../i18n/I18nProvider";
 import { PartGlbView } from "../three/PartGlbView";
@@ -11,15 +10,12 @@ export function PartCard({
   part,
   railBmk,
   railLengthMm,
-  railsHref,
   position,
   total,
 }: {
   part: Part;
   railBmk: string;
   railLengthMm: string;
-  /** The Rails page. Progress is saved at every step, so leaving needs no confirmation. */
-  railsHref: string;
   position: number;
   total: number;
 }) {
@@ -38,9 +34,6 @@ export function PartCard({
         </span>
         <span className={styles.partProgress}>{t.mount.partOf(position, total)}</span>
       </div>
-      <Link to={railsHref} className={styles.switchRail} draggable={false}>
-        {t.mount.switchRail}
-      </Link>
       {part.group && <span className={styles.take}>{t.mount.take(part.group.size, part.group.index)}</span>}
       <h1 className={`bmk ${styles.partBmk}`}>{part.bmk}</h1>
       <p className={styles.name}>{part.displayName}</p>

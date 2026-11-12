@@ -1,5 +1,5 @@
 import { ZOOM_STEP_MAX, ZOOM_STEP_MIN } from "../three/MountView";
-import { IconButton, ViewKeys, ViewKeysDivider } from "../components/ViewKeys";
+import { IconButton, LinkKey, ViewKeys, ViewKeysDivider } from "../components/ViewKeys";
 import { useI18n } from "../i18n/I18nProvider";
 
 interface ViewToolbarProps {
@@ -9,13 +9,18 @@ interface ViewToolbarProps {
   onToggleWholeRail: () => void;
   rotating: boolean;
   onToggleRotate: () => void;
+  /** The Rails page. Progress is saved at every step, so leaving needs no confirmation. */
+  railsHref: string;
+  /** A save is on its way: do not leave yet. */
+  saving: boolean;
+  isLocked: () => boolean;
 }
 
 /**
  * Small icon keys in the corner of the 3D view. The two toggles show the mode the view is in now
  * (pressed = on), not the action a tap would take.
  */
-export function ViewToolbar({ zoomStep, onZoom, wholeRail, onToggleWholeRail, rotating, onToggleRotate }: ViewToolbarProps) {
+export function ViewToolbar({ zoomStep, onZoom, wholeRail, onToggleWholeRail, rotating, onToggleRotate, railsHref, saving, isLocked }: ViewToolbarProps) {
   const { t } = useI18n();
   return (
     <ViewKeys label={t.mount.viewTools}>
@@ -46,6 +51,11 @@ export function ViewToolbar({ zoomStep, onZoom, wholeRail, onToggleWholeRail, ro
         <path d="M20 12a8 8 0 1 1-2.5-5.8" />
         <path d="M20 4v5h-5" />
       </IconButton>
+      <ViewKeysDivider />
+      <LinkKey to={railsHref} label={t.mount.switchRail} text={t.mount.rails} disabled={saving} isLocked={isLocked}>
+        {/* Two opposite arrows: switch. */}
+        <path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4" />
+      </LinkKey>
     </ViewKeys>
   );
 }
