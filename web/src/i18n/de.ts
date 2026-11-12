@@ -49,6 +49,7 @@ export const de: Dictionary = {
     partOf: (n, total) => `Teil ${n} von ${total}`,
     viewTools: "Ansichtswerkzeuge",
     switchRail: "Schiene wechseln",
+    rails: "Schienen",
     wholeRail: "Ganze Schiene",
     first: (at) => `Erstes Teil · ${at} vom linken Ende`,
     nextTo: (bmk, at) => `Neben ${bmk} · ${at} vom linken Ende`,

@@ -76,7 +76,7 @@ export function MountScreen({ rail }: { rail: Rail }) {
     <div className={styles.screen}>
       <div className={styles.body}>
         {/* Keyed by part: every new part starts on its photo. */}
-        <PartCard key={part.id} part={part} railBmk={rail.bmk} railLengthMm={mm(rail.cutLengthMm)} railsHref={paths.rails(cabinet.id)} position={mounted + 1} total={total} />
+        <PartCard key={part.id} part={part} railBmk={rail.bmk} railLengthMm={mm(rail.cutLengthMm)} position={mounted + 1} total={total} />
         <div className={styles.visual}>
           <div className={styles.view}>
             <MountView rail={rail} current={part} wholeRail={wholeRail} free={rotating} zoomStep={zoomStep} onZoomChange={setZoomStep} />
@@ -87,6 +87,9 @@ export function MountScreen({ rail }: { rail: Rail }) {
               onToggleWholeRail={() => setWholeRail((whole) => !whole)}
               rotating={rotating}
               onToggleRotate={() => setRotating((on) => !on)}
+              railsHref={paths.rails(cabinet.id)}
+              saving={step.pending}
+              isLocked={isLocked}
             />
           </div>
           <PositionStrip parts={rail.parts} mountedCount={mounted} />

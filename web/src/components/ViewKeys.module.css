@@ -16,8 +16,8 @@
 .key {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   border: 1px solid transparent;
   border-radius: 6px;
   background: transparent;
@@ -41,9 +41,39 @@
   outline-offset: 1px;
 }
 
+/* A key that goes to another page: icon and word, so it reads as a button, not a view control. */
+.linkKey {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  min-width: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--bezel);
+  border-radius: 6px;
+  background: #dbd8cf;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.linkKey[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.linkKey:focus-visible {
+  outline: 3px solid var(--vermilion);
+  outline-offset: 1px;
+}
+
 .divider {
   width: 1px;
-  height: 26px;
+  height: 30px;
   margin: 0 2px;
   background: var(--bezel);
 }
