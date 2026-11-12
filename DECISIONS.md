@@ -53,7 +53,9 @@ article's model once. The heavy traffic is the 3D files: static, cacheable.
 
 ## Not built, on purpose
 - **Skipping a part:** parts sit flush, so a skipped part can't go in later without taking others off.
-- Undoing a confirmed cut: since if it was cut, it was cut...
+- **Undoing a confirmed cut.** It can't be undone on the bench, because the piece is already cut and taken
+  off the bar. The risk is a mis-tap before cutting. I accepted it because the reminder and the 600 ms tap
+  lock sit before that button. A wrong cut is fixed with `npm run seed:reset`.
 - Scan confirmation, offline mode, operators/login, a planner dashboard.
 
 ## Found in the data
@@ -61,13 +63,24 @@ article's model once. The heavy traffic is the 3D files: static, cacheable.
 right end. The import stores both as a `plan_warning` on the part; the mount screen shows an amber line on
 that step ("Plan check: overlaps -1K2/2. Ask the planner before mounting.") and does not block.
 
-## Assumptions
-- Kerf is 0 mm (one constant, `KERF_MM`); the remnant shown follows from it. Positions are mm from the
-  rail's left end.
-- English is the default language; German is one tap away and remembered.
-- The screen is an iPad Pro 13" in landscape (works from 1024×768 to 1920×1080, stacks in portrait).
+## Assumptions, and what changes if they are wrong
+- **Kerf is 0 mm** (`KERF_MM`). With a 3 mm saw, every piece after the first starts 3 mm later on the bar,
+  the remnant shrinks 3 mm per cut, and a piece that no longer fits moves to a new bar. Only the cutting
+  plan changes: set `KERF_MM` and import again. The screens read offsets and remnants from the API.
+- **Positions are mm from the rail's left end.** If Vetaion measures from the right, only the where-line
+  wording changes ("from right end"). The mount order stays the same.
+- **Cut order follows the bar plan** (see UX).
+- **Trusted bench network, no login.** `operator_id` columns are ready; claiming rails is the next step.
+- **Screen:** iPad Pro 13" landscape, works from 1024×768 to 1920×1080.
+- **English default,** German one tap away.
 - Models and pictures come from a static middleware in the Vite dev server (immutable, cached a year).
   There is no production build yet.
+
+## Questions I would ask Vetaion
+- What is the kerf of your saw?
+- Are off-cuts (remnants) reused, and from which length?
+- Are positions on the drawing measured from the left end?
+- Do several benches work on one cabinet at the same time?
 
 ## Next steps
 - Offline queue with sync; operators and rail claiming for several benches.
