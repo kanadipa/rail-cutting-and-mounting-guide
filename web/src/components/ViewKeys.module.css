@@ -1,4 +1,4 @@
-/* The design's "rail-picker-bar": a small raised bar in the corner of the 3D view. */
+/* A small raised bar of keys in the corner of a 3D view. */
 .bar {
   position: absolute;
   top: 12px;
