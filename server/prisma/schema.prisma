@@ -1,0 +1,143 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// One catalog entry. An article is named by manufacturer and article number together.
+model Article {
+  id            Int     @id @default(autoincrement())
+  manufacturer  String
+  articleNumber String  @map("article_number")
+  displayName   String  @map("display_name")
+  category      String
+  /// Rail profiles only.
+  profileWxH    String? @map("profile_wxh")
+  /// Rail profiles only: the length of one raw bar.
+  barLengthMm   Float?  @map("bar_length_mm")
+  glbPath       String  @map("glb_path")
+  imagePath     String? @map("image_path")
+
+  rails       Rail[]
+  placedItems PlacedItem[]
+
+  @@unique([manufacturer, articleNumber])
+  @@map("articles")
+}
+
+model Cabinet {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  rails      Rail[]
+  workEvents WorkEvent[]
+
+  @@map("cabinets")
+}
+
+/// A rail to cut and assemble. BMKs are unique within one cabinet only.
+model Rail {
+  id          Int    @id @default(autoincrement())
+  cabinetId   Int    @map("cabinet_id")
+  bmk         String
+  articleId   Int    @map("article_id")
+  cutLengthMm Float  @map("cut_length_mm")
+  /// Position in the cutting plan, 1..n within the cabinet.
+  cutOrder    Int    @map("cut_order")
+  /// Which raw bar of this rail's article the piece is cut from (0-based).
+  barIndex    Int    @map("bar_index")
+  /// Where on that bar the piece starts.
+  barOffsetMm Float  @map("bar_offset_mm")
+
+  cabinet     Cabinet       @relation(fields: [cabinetId], references: [id], onDelete: Cascade)
+  article     Article       @relation(fields: [articleId], references: [id])
+  placedItems PlacedItem[]
+  progress    RailProgress?
+  workEvents  WorkEvent[]
+
+  @@unique([cabinetId, bmk])
+  @@unique([cabinetId, cutOrder])
+  @@index([cabinetId])
+  @@index([articleId])
+  @@map("rails")
+}
+
+/// A component on a rail, with the mounting order and measurements computed at import.
+model PlacedItem {
+  id             Int    @id @default(autoincrement())
+  railId         Int    @map("rail_id")
+  bmk            String
+  articleId      Int    @map("article_id")
+  /// The 3D pose from the plan: { positionMm: [x, y, z], quaternion: [x, y, z, w] }.
+  pose           Json
+  /// Mounting order on its rail, 1..n.
+  mountSeq       Int    @map("mount_seq")
+  /// Left and right edge of the part's bounding box along the rail.
+  xStartMm       Float  @map("x_start_mm")
+  xEndMm         Float  @map("x_end_mm")
+  /// Nearest point to the mounting plate; decides which of two stacked parts goes on first.
+  zMinMm         Float  @map("z_min_mm")
+  /// Empty rail to leave before this part.
+  gapBeforeMm    Float  @map("gap_before_mm")
+  /// The part this one clips onto, when it does not sit on the rail itself.
+  mountsOnItemId Int?   @map("mounts_on_item_id")
+  /// Marker carriers only: the mount steps of the first and last part it sits on.
+  labelsFirstSeq Int?   @map("labels_first_seq")
+  labelsLastSeq  Int?   @map("labels_last_seq")
+
+  rail       Rail         @relation(fields: [railId], references: [id], onDelete: Cascade)
+  article    Article      @relation(fields: [articleId], references: [id])
+  mountsOn   PlacedItem?  @relation("MountsOn", fields: [mountsOnItemId], references: [id], onDelete: SetNull)
+  carries    PlacedItem[] @relation("MountsOn")
+  workEvents WorkEvent[]
+
+  @@unique([railId, bmk])
+  @@unique([railId, mountSeq])
+  @@index([railId])
+  @@index([articleId])
+  @@map("placed_items")
+}
+
+/// One row per rail. The rail's status is derived from it, never stored.
+model RailProgress {
+  railId       Int       @id @map("rail_id")
+  cutAt        DateTime? @map("cut_at")
+  /// The first `mountedCount` parts in mount order are on the rail.
+  mountedCount Int       @default(0) @map("mounted_count")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  operatorId   String?   @map("operator_id")
+
+  rail Rail @relation(fields: [railId], references: [id], onDelete: Cascade)
+
+  @@map("rail_progress")
+}
+
+enum WorkEventType {
+  CUT
+  UNCUT
+  RECUT
+  MOUNT
+  UNMOUNT
+}
+
+/// Append-only history: one row per change of a rail's progress.
+model WorkEvent {
+  id           Int           @id @default(autoincrement())
+  cabinetId    Int           @map("cabinet_id")
+  railId       Int           @map("rail_id")
+  placedItemId Int?          @map("placed_item_id")
+  type         WorkEventType
+  operatorId   String?       @map("operator_id")
+  at           DateTime      @default(now())
+
+  cabinet    Cabinet     @relation(fields: [cabinetId], references: [id])
+  rail       Rail        @relation(fields: [railId], references: [id])
+  placedItem PlacedItem? @relation(fields: [placedItemId], references: [id])
+
+  @@index([cabinetId, at])
+  @@index([railId])
+  @@map("work_events")
+}

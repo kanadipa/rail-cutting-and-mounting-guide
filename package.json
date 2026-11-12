@@ -7,10 +7,10 @@
     "node": ">=20.11"
   },
   "scripts": {
-    "setup": "npm install && node scripts/ensure-env.mjs",
+    "setup": "npm install && node scripts/ensure-env.mjs && npm run db:wait -w server && npm run db:generate -w server && npm run db:deploy -w server",
     "demo": "vite",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json && npm run typecheck -w server"
   },
   "dependencies": {
     "@react-three/drei": "^9.122.0",
