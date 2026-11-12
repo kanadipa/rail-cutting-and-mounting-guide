@@ -27,6 +27,7 @@ export const en = {
     legendCut: "Already cut",
     legendNow: "Cut now",
     legendRest: "Rest of bar",
+    wholeBar: "Whole bar",
     before: "Before you put it in the tray:",
     profile: (profile: string) => `TS ${profile}`,
     fromBar: (bar: number) => `Bar ${bar}`,

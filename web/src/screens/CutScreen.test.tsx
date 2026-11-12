@@ -5,7 +5,9 @@ import { pass, renderApp } from "../test/renderApp";
 
 // jsdom has no WebGL: the 3D bar is checked by eye.
 vi.mock("../three/BarCutView", () => ({
-  BarCutView: ({ glbUrl, bar }: { glbUrl: string; bar: { articleId: number } }) => <div data-testid="bar-view" data-glb={glbUrl} data-article={bar.articleId} />,
+  BarCutView: ({ glbUrl, bar, wholeBar }: { glbUrl: string; bar: { articleId: number }; wholeBar?: boolean }) => (
+    <div data-testid="bar-view" data-glb={glbUrl} data-article={bar.articleId} data-whole={String(wholeBar === true)} />
+  ),
 }));
 vi.mock("../three/MountView", () => ({ MountView: () => null, ZOOM_STEP_MIN: -3, ZOOM_STEP_MAX: 5 }));
 
@@ -71,5 +73,19 @@ describe("cut screen", () => {
       ["1", "/assets/glb/rail.glb"],
       ["2", "/assets/glb/rail-b.glb"],
     ]);
+  });
+
+  it("switches the 3D view between the stretch around the piece and the whole bar", async () => {
+    await openCutScreen({ cut: false });
+    const toggle = screen.getByRole("button", { name: "Whole bar" });
+    expect(toggle.getAttribute("aria-pressed")).toBe("false");
+    expect(screen.getByTestId("bar-view").getAttribute("data-whole")).toBe("false");
+
+    fireEvent.click(toggle);
+    expect(toggle.getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByTestId("bar-view").getAttribute("data-whole")).toBe("true");
+
+    fireEvent.click(toggle);
+    expect(screen.getByTestId("bar-view").getAttribute("data-whole")).toBe("false");
   });
 });
