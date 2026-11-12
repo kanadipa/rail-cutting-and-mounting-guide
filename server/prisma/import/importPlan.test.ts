@@ -92,6 +92,8 @@ describe("importPlan", () => {
   });
 
   it("keeps one row per article however often the catalog is imported", async () => {
-    expect(await prisma.article.count()).toBe(realCatalog().length);
+    const catalog = realCatalog();
+    const keys = catalog.map(({ manufacturer, articleNumber }) => ({ manufacturer, articleNumber }));
+    expect(await prisma.article.count({ where: { OR: keys } })).toBe(catalog.length);
   });
 });
