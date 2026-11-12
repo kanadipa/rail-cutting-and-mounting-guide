@@ -1,0 +1,41 @@
+.tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--bezel);
+  background: rgb(245 244 239 / 0.95);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.now {
+  border: 2px solid var(--orange);
+  background: #fff;
+  color: var(--orange);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.cut {
+  border-color: var(--green-border);
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.saw {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--orange);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgb(216 59 1 / 0.25);
+  pointer-events: none;
+}
