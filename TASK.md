@@ -1,20 +1,16 @@
-# Full-stack & UI/UX challenge
+# Full-stack & UI/UX project
 
 ## Rail cutting & mounting guide
 
-A workshop builds electrical control cabinets. On our shop floor every workbench has a touchscreen
-running our own software, which tells the operator what to do next: what to cut, which part to take
-from the shelf, and where it goes.
+Picture a workshop where electrical control cabinets are built. Every workbench has a touchscreen
+running software that tells the operator what to do next: what to cut, which part to take from the
+shelf, and where it goes.
 
-In this challenge you design and build a simplified version of one of those screens.
+This project is a simplified version of one of those screens, built as a personal project.
 
-Use any AI tools you like.
+AI tools are welcome.
 
-> **Confidential.** This challenge and everything that comes with it (the brief, the data, the
-> code and the documents) is provided by **the company** for your application only. The 3D models
-> and product pictures remain the property of their manufacturers. Do not publish or share any of
-> it, or your solution, with anyone other than the reviewers. That includes public
-> repositories and public file-sharing links.
+> **Note.** The 3D models and product pictures remain the property of their manufacturers.
 
 ---
 
@@ -33,9 +29,9 @@ Use any AI tools you like.
 
 ---
 
-## 2. Your task
+## 2. The task
 
-Build a web app that guides an operator through **two steps**:
+A web app that guides an operator through **two steps**:
 
 ### Step 1 — Cut the rails
 
@@ -50,7 +46,7 @@ The operator cuts every rail the cabinet needs from raw bars.
 - The operator **chooses a rail** (any one of the cut rails) and starts assembling it.
 - Guide them **part by part**: which part to take, what it looks like, and **where
   on the rail** it goes.
-- **The data does not give the mounting order. Work it out from the components' 3D poses**
+- **The data does not give the mounting order. It is worked out from the components' 3D poses**
   ([how](docs/data-model.md#the-mounting-order-is-yours-to-work-out)).
 - Show progress. Let them go back if they made a mistake.
 - When a rail is finished, they move on to the next one, until every rail is done.
@@ -58,12 +54,12 @@ The operator cuts every rail the cabinet needs from raw bars.
   session, from where they left off.
 
 **What information does an operator need at each moment, and what should stay out of the way?**
-That question is part of this challenge. Your task is to design software that makes the work easier
-for the operator, so imagine doing the task yourself and ask what would make it easier for you.
+That question is part of this project. The goal is software that makes the work easier for the
+operator: imagine doing the task yourself and ask what would make it easier.
 
 ### The operator and the screen
 
-These are real constraints from our benches:
+These are the constraints I designed for:
 
 - The operator **interacts** with the software through a touchscreen between actions. Their hands and eyes are on the rail most of the time.
 - Operators are skilled technicians, not software users. Keep the wording short and plain.
@@ -71,11 +67,11 @@ These are real constraints from our benches:
 ### Optional (only if you have time)
 
 - **Data persistence:** progress survives a page reload.
-- Anything else you think an operator would thank you for. Tell us why.
+- Anything else you think an operator would thank you for, with the reason.
 
 ---
 
-## 3. What you get
+## 3. What is in the repo
 
 ```
 data/            the job, as JSON — see docs/data-model.md
@@ -104,8 +100,8 @@ serves it.
 
 **Steps**
 
-1. Unzip the file we sent you.
-2. Open a terminal in the unzipped folder (the one with `package.json`).
+1. Clone or unzip the project.
+2. Open a terminal in the project folder (the one with `package.json`).
 3. Install the dependencies (once):
    ```bash
    npm install
@@ -133,7 +129,7 @@ rotate, right-drag or two fingers to pan, and scroll or pinch to zoom.
 - **The page loads but the 3D area stays empty:** the browser has WebGL turned off, or the machine
   has no graphics support for it, as in some virtual machines. Try another browser.
 
-You may build on these files or start from scratch. You may use **React, Vue, Svelte, plain JS,
+These files can be built on or replaced. Any stack works: **React, Vue, Svelte, plain JS,
 or anything else**. `lib/core` has no framework dependency.
 
 ### The 3D lib
@@ -145,48 +141,42 @@ See **[docs/lib.md](docs/lib.md)**. In short:
 - `placeComponent(model, pose)` puts a component GLB at its pose on the rail.
 - `createRailScene(container)` sets up a ready viewer (camera, lights, touch controls).
 
-You do not need any 3D experience beyond calling these.
+No 3D experience is needed beyond calling these.
 
 ---
 
 ## 4. Database (optional, but preferred)
 
-You may read the JSON files directly. We'd **prefer** you put the data in a database and query it
-from the app. Use any platform: [Supabase](https://supabase.com) (free tier), SQLite,
+The JSON files can be read directly, but it is preferable to put the data in a database and query
+it from the app. Use any platform: [Supabase](https://supabase.com) (free tier), SQLite,
 PostgreSQL, Firebase, anything.
 
-If you do:
+If a database is used:
 
-- Design the schema yourself. The JSON files are a starting point, not the schema.
-- Load the data with a script or a migration that we can run.
-- Explain your schema in a few lines: what the tables are and why.
+- The schema is a custom design. The JSON files are a starting point, not the schema.
+- Load the data with a script or a migration that anyone can run.
+- Explain the schema in a few lines: what the tables are and why.
 - Design for scale: assume the real data is far larger, and keep loading and querying fast.
 
 ---
 
-## 5. What to send us
+## 5. Deliverables
 
-1. **Your work, as a zip file or a private Git repository** (GitHub, GitLab…) shared only with
-   the reviewers, with clear run instructions. Leave `node_modules` out of a zip.
+1. **The work**, with clear run instructions. Leave `node_modules` out of any zip.
 2. **`DECISIONS.md`**, one page at most:
-   - the key UX decisions you made and why;
-   - your data model (if you used a database);
-   - what you would do next with more time;
-   - which AI tools you used, and for what.
+   - the key UX decisions and why;
+   - the data model (if a database is used);
+   - what comes next with more time;
+   - which AI tools were used, and for what.
 3. Optional: a short screen recording.
 
-### What we look at
+### What matters
 
 - **Clarity for the operator.** Does the screen say what to do next, at a glance? Is the step
   from one part to the next obvious?
 - **Visual design.** Hierarchy, spacing, consistency, and touch-friendliness.
 - **Data.** A sensible model, and sensible queries.
 - **Code.** Readable, structured, and easy to change.
-- **Communication.** How well you explain your choices.
+- **Communication.** How well the choices are explained.
 
 ---
-
-## Questions?
-
-Write to **the maintainer**. Asking a good question counts in your
-favour.
